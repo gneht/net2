@@ -1,12 +1,12 @@
 import { COLUMNS } from "../types";
 
-function dragEndHandler(
+const handleDragEnd = (
   result: any,
   columns: COLUMNS,
   setColumns: (columns: COLUMNS) => any,
   columnOrder: Array<string>,
   setColumnOrder: (columnOrder: Array<string>) => any
-) {
+) => {
   const { destination, source, draggableId, type } = result;
 
   if (!destination) {
@@ -77,6 +77,6 @@ function dragEndHandler(
   // Update board in localStorage (done via useEffect)
 
   return;
-}
+};
 
-export default dragEndHandler;
+export default handleDragEnd;

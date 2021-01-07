@@ -1,14 +1,24 @@
+export interface CARD {
+  id: string;
+  text: string;
+  url: string;
+}
+
 export interface CARDS {
-  [key: string]: {
-    id: string;
-    text: string;
-  };
+  [key: string]: CARD;
+}
+
+export interface COLUMN {
+  id: string;
+  title: string;
+  cardIds: Array<string>;
 }
 
 export interface COLUMNS {
-  [key: string]: {
-    id: string;
-    title: string;
-    cardIds: Array<string>;
-  };
+  [key: string]: COLUMN;
+}
+
+export interface OPTIONS {
+  markdownLinks: boolean;
+  openOnLaunch: boolean;
 }
