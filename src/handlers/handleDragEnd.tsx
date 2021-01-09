@@ -5,7 +5,9 @@ const handleDragEnd = (
   columns: COLUMNS,
   setColumns: (columns: COLUMNS) => any,
   columnOrder: Array<string>,
-  setColumnOrder: (columnOrder: Array<string>) => any
+  setColumnOrder: (columnOrder: Array<string>) => any,
+  collapsedOrder: Array<string>,
+  setCollapsedOrder: (collapsedOrder: Array<string>) => any
 ) => {
   const { destination, source, draggableId, type } = result;
 
@@ -27,6 +29,16 @@ const handleDragEnd = (
     newColumnOrder.splice(destination.index, 0, draggableId);
 
     setColumnOrder(newColumnOrder);
+    return;
+  }
+
+  // Drag&Drop for collapsed columns
+  if (type === "collapsed-column") {
+    const newCollapsedOrder = Array.from(collapsedOrder);
+    newCollapsedOrder.splice(source.index, 1);
+    newCollapsedOrder.splice(destination.index, 0, draggableId);
+
+    setCollapsedOrder(newCollapsedOrder);
     return;
   }
 

@@ -1,6 +1,6 @@
 export interface CARD {
   id: string;
-  text: string;
+  text: string | null;
   url: string;
 }
 
@@ -21,4 +21,5 @@ export interface COLUMNS {
 export interface OPTIONS {
   markdownLinks: boolean;
   openOnLaunch: boolean;
+  showCollapsed: boolean;
 }

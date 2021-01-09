@@ -1,0 +1,81 @@
+import { Draggable, Droppable } from "react-beautiful-dnd";
+import ColumnHeader from "./ColumnHeader";
+
+import { COLUMNS } from "../types";
+
+const CollapsedColumns = (props: {
+  columns: COLUMNS;
+  collapsedOrder: Array<string>;
+  removeColumnHandler: (columnId: string) => any;
+  updateColumnHandler: (columnId: string) => any;
+  openAllCardsHandler: (columnId: string) => any;
+  clipboardHandler: (columnId: string) => any;
+  collapseHandler: (columnId: string) => any;
+}) => {
+  const {
+    columns,
+    collapsedOrder,
+    removeColumnHandler,
+    updateColumnHandler,
+    openAllCardsHandler,
+    clipboardHandler,
+    collapseHandler,
+  } = props;
+  return (
+    <Droppable
+      droppableId="collapsed-columns"
+      direction="vertical"
+      type="collapsed-column"
+    >
+      {(provided) => (
+        <div
+          className="flex flex-col items-start"
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+        >
+          {collapsedOrder.map((e, index) => {
+            const column = columns[e];
+            return (
+              <Draggable key={column.id} draggableId={column.id} index={index}>
+                {(provided) => (
+                  <div {...provided.draggableProps} ref={provided.innerRef}>
+                    <div className="w-80 flex-none m-1 border-solid border-4 border-gray-400 rounded-md">
+                      {/* This, including the line above, is the orignal drag/drop*/}
+                      <ColumnHeader
+                        column={column}
+                        removeColumnHandler={removeColumnHandler}
+                        clipboardHandler={clipboardHandler}
+                        updateColumnHandler={updateColumnHandler}
+                        openAllCardsHandler={openAllCardsHandler}
+                        collapse={true}
+                        collapseHandler={collapseHandler(column.id)}
+                        dragHandleProps={provided.dragHandleProps}
+                      />
+
+                      <Droppable droppableId={column.id} type="card">
+                        {(provided, snapshot) => (
+                          <div
+                            className={`${
+                              snapshot.isDraggingOver ? "bg-gray-100" : ""
+                            } p-1 transition`}
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                          >
+                            {provided.placeholder}
+                          </div>
+                        )}
+                      </Droppable>
+                    </div>
+                  </div>
+                )}
+              </Draggable>
+            );
+          })}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
+  );
+};
+
+export default CollapsedColumns;

@@ -7,7 +7,7 @@ function ColumnHeader(props: {
   updateColumnHandler: (title: string) => any;
   openAllCardsHandler: (columnId: string) => any;
   collapse: boolean;
-  setCollapse: (collapse: boolean) => any;
+  collapseHandler: (collapse: boolean) => any;
   dragHandleProps: any;
 }) {
   const {
@@ -17,7 +17,7 @@ function ColumnHeader(props: {
     updateColumnHandler,
     openAllCardsHandler,
     collapse,
-    setCollapse,
+    collapseHandler,
     dragHandleProps,
   } = props;
 
@@ -72,9 +72,9 @@ function ColumnHeader(props: {
 
       <div className="flex">
         {collapse ? (
-          <button onClick={() => setCollapse(false)}>F</button>
+          <button onClick={() => collapseHandler(true)}>E</button>
         ) : (
-          <button onClick={() => setCollapse(true)}>T</button>
+          <button onClick={() => collapseHandler(false)}>C</button>
         )}
         <button onClick={() => openAllCardsHandler(column.id)}>O</button>
         <button onClick={() => clipboardHandler(column.id)}>C</button>

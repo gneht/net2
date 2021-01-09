@@ -6,6 +6,7 @@ import { CARDS, COLUMNS, OPTIONS } from "./types";
 import Header from "./components/Header";
 import NewColumnComponent from "./components/NewColumnComponent";
 import Column from "./components/Column";
+import CollapsedColumns from "./components/CollapsedColumns";
 
 import handleDragEnd from "./handlers/handleDragEnd";
 import handleCreateCard from "./handlers/handleCreateCard";
@@ -15,6 +16,7 @@ import handleRemoveColumn from "./handlers/handleRemoveColumn";
 import handleClipboard from "./handlers/handleClipboard";
 import handleUpdateColumn from "./handlers/handleUpdateColumn";
 import handleOpenAllCards from "./handlers/handleOpenAllCards";
+import handleCollapse from "./handlers/handleCollapse";
 
 import "./App.css";
 
@@ -22,10 +24,12 @@ const App = () => {
   const [cards, setCards] = useState<CARDS>({});
   const [columns, setColumns] = useState<COLUMNS>({});
   const [columnOrder, setColumnOrder] = useState<Array<string>>([]);
+  const [collapsedOrder, setCollapsedOrder] = useState<Array<string>>([]);
 
   const [options, setOptions] = useState<OPTIONS>({
     markdownLinks: false,
     openOnLaunch: true,
+    showCollapsed: true,
   });
 
   useEffect(() => {
@@ -33,15 +37,24 @@ const App = () => {
     const storedCards = localStorage.getItem("cards");
     const storedColumns = localStorage.getItem("columns");
     const storedColumnOrder = localStorage.getItem("columnOrder");
+    const storedCollapsedOrder = localStorage.getItem("collapsedOrder");
     const storedOptions = localStorage.getItem("options");
 
-    if (storedCards && storedColumns && storedColumnOrder && storedOptions) {
+    if (
+      storedCards &&
+      storedColumns &&
+      storedColumnOrder &&
+      storedOptions &&
+      storedCollapsedOrder
+    ) {
       const parsedCards = JSON.parse(storedCards);
       setCards(parsedCards);
       const parsedColumns = JSON.parse(storedColumns);
       setColumns(parsedColumns);
       const parsedColumnOrder = JSON.parse(storedColumnOrder);
       setColumnOrder(parsedColumnOrder);
+      const parsedCollapsedOrder = JSON.parse(storedCollapsedOrder);
+      setCollapsedOrder(parsedCollapsedOrder);
       const parsedOptions = JSON.parse(storedOptions);
       setOptions(parsedOptions);
     }
@@ -60,6 +73,10 @@ const App = () => {
   }, [columnOrder]);
 
   useEffect(() => {
+    localStorage.setItem("collapsedOrder", JSON.stringify(collapsedOrder));
+  }, [collapsedOrder]);
+
+  useEffect(() => {
     localStorage.setItem("options", JSON.stringify(options));
   }, [options]);
 
@@ -70,11 +87,30 @@ const App = () => {
     // https://github.com/eggheadio-projects/Beautiful-and-Accessible-Drag-and-Drop-with-react-beautiful-dnd-notes/blob/master/07-react-customise-the-appearance-of-an-app-using-react-beautiful-dnd-ondragstart-and-ondragend.md
   };
   const onDragEnd = (result: any) => {
-    handleDragEnd(result, columns, setColumns, columnOrder, setColumnOrder);
+    handleDragEnd(
+      result,
+      columns,
+      setColumns,
+      columnOrder,
+      setColumnOrder,
+      collapsedOrder,
+      setCollapsedOrder
+    );
   };
 
-  const createColumnHandler = (title: string) => {
-    handleCreateColumn(title, columns, setColumns, columnOrder, setColumnOrder);
+  const createColumnHandler = (title: string, imports: string) => {
+    handleCreateColumn(
+      title,
+      cards,
+      setCards,
+      columns,
+      options,
+      setColumns,
+      columnOrder,
+      setColumnOrder,
+      collapsedOrder,
+      imports
+    );
   };
   const removeColumnHandler = (columnId: string) => {
     handleRemoveColumn(
@@ -84,7 +120,9 @@ const App = () => {
       columns,
       setColumns,
       columnOrder,
-      setColumnOrder
+      setColumnOrder,
+      collapsedOrder,
+      setCollapsedOrder
     );
   };
   const updateColumnHandler = (columnId: string) => (title: string) => {
@@ -92,7 +130,15 @@ const App = () => {
   };
 
   const createCardHandler = (columnId: string) => (url: string) => {
-    handleCreateCard(columnId, url, cards, setCards, columns, setColumns);
+    handleCreateCard(
+      columnId,
+      url,
+      cards,
+      setCards,
+      columns,
+      setColumns,
+      options
+    );
   };
 
   const removeCardHandler = (columnId: string) => (cardId: string) => {
@@ -104,7 +150,18 @@ const App = () => {
   };
 
   const clipboardHandler = (columnId: string) => {
-    handleClipboard(columnId, cards, columns);
+    handleClipboard(columnId, cards, columns, options);
+  };
+
+  const collapseHandler = (columnId: string) => (collapsed: boolean) => {
+    handleCollapse(
+      columnId,
+      collapsed,
+      columnOrder,
+      setColumnOrder,
+      collapsedOrder,
+      setCollapsedOrder
+    );
   };
 
   return (
@@ -147,10 +204,24 @@ const App = () => {
                       removeCardHandler={removeCardHandler(column.id)}
                       openAllCardsHandler={openAllCardsHandler}
                       clipboardHandler={clipboardHandler}
+                      collapseHandler={collapseHandler(column.id)}
                     ></Column>
                   );
                 })}
                 {provided.placeholder}
+                {options.showCollapsed ? (
+                  <CollapsedColumns
+                    columns={columns}
+                    collapsedOrder={collapsedOrder}
+                    removeColumnHandler={removeColumnHandler}
+                    updateColumnHandler={updateColumnHandler}
+                    openAllCardsHandler={openAllCardsHandler}
+                    clipboardHandler={clipboardHandler}
+                    collapseHandler={collapseHandler}
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
             )}
           </Droppable>

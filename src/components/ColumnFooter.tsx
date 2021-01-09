@@ -9,49 +9,24 @@ function ColumnFooter(props: {
   const { createCardHandler, options } = props;
 
   const [text, setText] = useState("");
-  const [url, setUrl] = useState("");
 
   return (
     <div>
-      {options.markdownLinks ? (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            createCardHandler(text);
-            setText("");
-          }}
-          noValidate
-        >
-          <input
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            className="p-1"
-            placeholder={"'[text](url)' or 'url'"}
-          ></input>
-        </form>
-      ) : (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            createCardHandler(text);
-            setText("");
-          }}
-          noValidate
-        >
-          <input
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            className="p-1"
-            placeholder={"text"}
-          ></input>
-          <input
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            className="p-1"
-            placeholder={"url"}
-          ></input>
-        </form>
-      )}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          createCardHandler(text);
+          setText("");
+        }}
+        noValidate
+      >
+        <input
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          className="p-1"
+          placeholder={options.markdownLinks ? "'[text](url)' or 'url'" : "url"}
+        ></input>
+      </form>
     </div>
   );
 }

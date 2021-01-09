@@ -7,7 +7,9 @@ const handleRemoveColumn = (
   columns: COLUMNS,
   setColumns: (columns: COLUMNS) => any,
   columnOrder: Array<string>,
-  setColumnOrder: (columnOrder: Array<string>) => any
+  setColumnOrder: (columnOrder: Array<string>) => any,
+  collapsedOrder: Array<string>,
+  setCollapsedOrder: (collapsedOrder: Array<string>) => any
 ) => {
   const newColumns = columns;
   const removedCards = newColumns[columnId].cardIds;
@@ -22,6 +24,7 @@ const handleRemoveColumn = (
   setCards(newCards);
   setColumns(newColumns);
   setColumnOrder(columnOrder.filter((e) => e !== columnId));
+  setCollapsedOrder(collapsedOrder.filter((e) => e !== columnId));
   return;
 };
 

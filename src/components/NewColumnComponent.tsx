@@ -3,20 +3,21 @@ import { OPTIONS } from "../types";
 
 function NewColumnComponent(props: {
   options: OPTIONS;
-  createColumnHandler: (title: string) => any;
+  createColumnHandler: (title: string, imports: string) => any;
 }) {
   const { options, createColumnHandler } = props;
   const [title, setTitle] = useState("");
   const [imports, setImports] = useState("");
 
   return (
-    <div className="w-72 flex-none m-1 border-solid border-4 border-indigo-400 rounded-md">
+    <div className="w-80 flex-none m-1 border-solid border-4 border-gray-400 rounded-md">
       <h3 className="p-1">New Column</h3>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          createColumnHandler(title); // , imports
+          createColumnHandler(title, imports); // , imports
           setTitle("");
+          setImports("");
         }}
         noValidate
       >
@@ -32,8 +33,8 @@ function NewColumnComponent(props: {
           className="p-1 h-48 w-full"
           placeholder={`Paste to import\n––\n${
             options.markdownLinks
-              ? "Ex.\n[Google](https://www.google.com/)\n\n[Yale](https://www.yale.edu/)"
-              : "Ex.\nGoogle: https://www.google.com/\nYale: https://www.yale.edu"
+              ? "Ex.\n[Google](https://www.google.com/)\n[Yale](https://www.yale.edu/)"
+              : "Ex.\nhttps://www.google.com/\nhttps://www.yale.edu"
           }`}
         ></textarea>
       </form>

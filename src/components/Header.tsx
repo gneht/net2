@@ -14,6 +14,9 @@ const Header = (props: {
           🥅
         </span>
       </h1>
+      {/*
+        // HIDING OPTIONS WHILE DESIGNING
+      */}
       <div>
         <h4>Markdown mode</h4>
         <input
@@ -34,6 +37,17 @@ const Header = (props: {
             setOptions({
               ...options,
               openOnLaunch: !options.openOnLaunch,
+            });
+          }}
+        ></input>
+        <h4>Show Collapsed</h4>
+        <input
+          type="checkbox"
+          checked={options.showCollapsed || false}
+          onChange={() => {
+            setOptions({
+              ...options,
+              showCollapsed: !options.showCollapsed,
             });
           }}
         ></input>
