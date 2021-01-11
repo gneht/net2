@@ -25,7 +25,7 @@ function ColumnFooter(props: {
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="p-1 w-full border-b-2 focus:outline-none focus:border-gray-500"
+            className="p-1 w-full border-b-2 focus:outline-none focus:border-gray-500 bg-transparent"
             placeholder={
               options.markdownLinks ? "'[text](url)' or 'url'" : "url"
             }

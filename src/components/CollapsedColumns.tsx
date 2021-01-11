@@ -7,7 +7,6 @@ import "./CollapsedColumns.css";
 const CollapsedColumns = (props: {
   columns: COLUMNS;
   collapsedOrder: Array<string>;
-  showSelection: boolean;
   selected: Array<string>;
   setShowSelection: (showSelected: boolean) => any;
   removeColumnHandler: (columnId: string) => any;
@@ -20,7 +19,6 @@ const CollapsedColumns = (props: {
   const {
     columns,
     collapsedOrder,
-    showSelection,
     selected,
     setShowSelection,
     removeColumnHandler,
@@ -32,7 +30,7 @@ const CollapsedColumns = (props: {
   } = props;
   return (
     <div className="m-4">
-      <div className="py-4 px-24 mb-4 shadow-md rounded-md ring-1 ring-black ring-opacity-5 bg-white text-gray-600 font-medium">
+      <div className="py-4 px-24 mb-4 shadow-md rounded-md ring-1 ring-black ring-opacity-5 bg-white text-gray-600 font-medium bg-gray-50">
         Collapsed Columns
       </div>
       <Droppable

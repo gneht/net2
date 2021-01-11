@@ -12,16 +12,15 @@ const Card = (props: {
       {(provided, snapshot) => (
         <div
           className={`${
-            snapshot.isDragging ? "bg-white" : "bg-gray-white"
+            snapshot.isDragging ? "bg-white" : "bg-gray-50"
           } p-4 rounded-md shadow-md ring-1 ring-black ring-opacity-5 flex justify-between space-x-4`}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          {/* https://stackoverflow.com/questions/38599939/how-to-get-larger-favicon-from-googles-api/46044485 */}
           <img
             className="h-5 w-5"
-            style={{ filter: "grayscale(100%)" }}
+            // style={{ filter: "grayscale(100%)" }}
             alt="favicon"
             src={"http://www.google.com/s2/favicons?sz=64&domain=" + card.url}
           ></img>

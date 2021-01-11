@@ -298,7 +298,6 @@ const App = () => {
                     <CollapsedColumns
                       columns={columns}
                       collapsedOrder={collapsedOrder}
-                      showSelection={showSelection}
                       selected={selected}
                       removeColumnHandler={removeColumnHandler}
                       updateColumnHandler={updateColumnHandler}

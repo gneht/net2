@@ -88,9 +88,7 @@ function ColumnHeader(props: {
           }}
           onBlur={onBlur}
           onKeyDown={handleKeydown}
-          className={`${
-            selected ? "bg-gray-100" : "bg-white"
-          } text-gray-600 font-medium text-sm border-b-2 border-transparent focus:outline-none focus:border-gray-500 focus:bg-white w-full`}
+          className={`bg-transparent text-gray-600 font-medium text-sm border-b-2 border-transparent focus:outline-none focus:border-gray-500 w-full`}
           placeholder="Untitled"
         ></input>
       </div>

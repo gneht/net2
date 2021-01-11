@@ -49,7 +49,7 @@ function Column(props: {
         <div className="" {...provided.draggableProps} ref={provided.innerRef}>
           <div
             className={`w-80 flex-none m-4 rounded-md shadow-md ring-1 ring-black ring-opacity-5 ${
-              selected ? "bg-gray-100" : "bg-white"
+              selected ? "bg-blue-100" : "bg-white"
             }`}
           >
             <ColumnHeader
