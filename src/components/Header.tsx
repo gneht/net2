@@ -46,7 +46,7 @@ const Header = (props: {
                 <div className="flex space-x-3">
                   <button
                     type="button"
-                    className="bg-white rounded-md px-3 py-2 text-gray-500 inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none ring-2 ring-offset-2 ring-gray-500 focus:ring-gray-900"
+                    className="bg-blue-100 rounded-md px-3 py-2 text-blue-500 inline-flex items-center text-base font-medium hover:text-blue-900 focus:outline-none ring-2 ring-offset-2 ring-gray-blue focus:ring-gray-blue"
                     onClick={() => generateLinkHandler(selected)}
                   >
                     Generate Link
