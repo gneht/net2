@@ -1,0 +1,25 @@
+.add-column-dropdown {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+}
+
+.add-column:hover > .add-column-dropdown {
+  visibility: visible;
+  opacity: 1;
+  height: auto;
+}
+
+.add-column-heading {
+  visibility: visible;
+  opacity: 1;
+  height: 4rem;
+  padding: 1rem;
+}
+
+.add-column:hover > .add-column-heading {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  padding: 0;
+}

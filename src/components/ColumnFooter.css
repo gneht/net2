@@ -1,0 +1,29 @@
+.add-card-dropdown {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.add-card:hover > .add-card-dropdown {
+  visibility: visible;
+  opacity: 1;
+  height: auto;
+  margin: 1rem;
+  padding-bottom: 1rem;
+}
+
+.add-card-heading {
+  visibility: visible;
+  opacity: 1;
+  height: auto;
+  margin: 1rem;
+}
+
+.add-card:hover > .add-card-heading {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  margin: 0;
+}

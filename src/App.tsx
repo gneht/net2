@@ -17,6 +17,9 @@ import handleClipboard from "./handlers/handleClipboard";
 import handleUpdateColumn from "./handlers/handleUpdateColumn";
 import handleOpenAllCards from "./handlers/handleOpenAllCards";
 import handleCollapse from "./handlers/handleCollapse";
+import handleGenerateLink from "./handlers/handleGenerateLink";
+
+import emptyState from "./assets/undraw_blank_canvas_3rbb.svg";
 
 import "./App.css";
 
@@ -31,6 +34,11 @@ const App = () => {
     openOnLaunch: true,
     showCollapsed: true,
   });
+
+  const [snap, setSnap] = useState<boolean>(true);
+
+  const [showSelection, setShowSelection] = useState<boolean>(false);
+  const [selected, setSelected] = useState<Array<string>>([]);
 
   useEffect(() => {
     // Update board on load
@@ -61,6 +69,17 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    var root = document.documentElement;
+    if (snap) {
+      root.className += " snapWrapTrue";
+      root.classList.remove("snapWrapFalse");
+    } else {
+      root.className += " snapWrapFalse";
+      root.classList.remove("snapWrapTrue");
+    }
+  }, [snap]);
+
+  useEffect(() => {
     localStorage.setItem("cards", JSON.stringify(cards));
   }, [cards]);
 
@@ -80,6 +99,10 @@ const App = () => {
     localStorage.setItem("options", JSON.stringify(options));
   }, [options]);
 
+  const onBeforeDragStart = () => {
+    setSnap(false);
+  };
+
   const onDragStart = () => {
     // https://github.com/eggheadio-projects/Beautiful-and-Accessible-Drag-and-Drop-with-react-beautiful-dnd-notes/blob/master/07-react-customise-the-appearance-of-an-app-using-react-beautiful-dnd-ondragstart-and-ondragend.md
   };
@@ -96,6 +119,7 @@ const App = () => {
       collapsedOrder,
       setCollapsedOrder
     );
+    setSnap(true);
   };
 
   const createColumnHandler = (title: string, imports: string) => {
@@ -164,11 +188,43 @@ const App = () => {
     );
   };
 
+  const generateLinkHandler = (columnIds: Array<string>) => {
+    /* 
+    We need: 
+    a way to start selection, 
+    a way to select a column
+    a way to deselect a column
+    a way to stop selection
+    an indication that a column has been selected 
+    submit button, 
+    toast or open link
+    */
+    handleGenerateLink(columnIds, cards, columns, columnOrder);
+  };
+
+  const selectionHandler = (columnId: string) => {
+    if (selected.includes(columnId)) {
+      setSelected(selected.filter((c) => c !== columnId));
+    } else {
+      setSelected([...selected, columnId]);
+    }
+  };
+
   return (
     <div className="h-screen">
-      <Header options={options} setOptions={setOptions}></Header>
-      <div className="h-2/3">
+      <Header
+        options={options}
+        setOptions={setOptions}
+        selected={selected}
+        setSelected={setSelected}
+        showSelection={showSelection}
+        setShowSelection={setShowSelection}
+        generateLinkHandler={generateLinkHandler}
+        columnsCount={columnOrder.length}
+      ></Header>
+      <div style={{ position: "absolute", top: "20%" }} className="h-4/5">
         <DragDropContext
+          onBeforeDragStart={onBeforeDragStart}
           onDragStart={onDragStart}
           onDragUpdate={onDragUpdate}
           onDragEnd={onDragEnd}
@@ -178,52 +234,86 @@ const App = () => {
             direction="horizontal"
             type="column"
           >
-            {(provided) => (
-              <div
-                className="h-full flex items-start overflow-x-auto"
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                <NewColumnComponent
-                  options={options}
-                  createColumnHandler={createColumnHandler}
-                />
-                {columnOrder.map((e, index) => {
-                  const column = columns[e];
-                  const columnCards = column.cardIds.map((c) => cards[c]);
-                  return (
-                    <Column
-                      key={column.id}
-                      column={column}
-                      cards={columnCards}
-                      index={index}
-                      options={options}
+            {(provided) => {
+              return (
+                <div
+                  className={`snapChild pt-16 px-16 flex items-start w-max`}
+                  // https://stackoverflow.com/questions/37112218/css3-100vh-not-constant-in-mobile-browser
+                  style={{ minHeight: "-webkit-fill-available" }}
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  <NewColumnComponent
+                    options={options}
+                    createColumnHandler={createColumnHandler}
+                  />
+                  {columnOrder.length === 0 ? (
+                    <div
+                      className={`w-80 h-96 flex flex-col justify-evenly items-center space-y-6 flex-none m-4 rounded-md shadow-md ring-1 ring-black ring-opacity-5 bg-gray-100`}
+                    >
+                      <img
+                        className="w-64 flex-initial"
+                        src={emptyState}
+                        style={{ filter: "grayscale(100%)" }}
+                        alt="Empty State"
+                      />
+                      <div className="flex-initial flex flex-col items-center">
+                        <h4 className="text-lg font-medium text-gray-500">
+                          You haven't saved any links!
+                        </h4>
+                        <p className="text-gray-500">
+                          How about creating a new column?
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                  {columnOrder.map((e, index) => {
+                    const column = columns[e];
+                    const columnCards = column.cardIds.map((c) => cards[c]);
+                    return (
+                      <Column
+                        key={column.id}
+                        column={column}
+                        cards={columnCards}
+                        index={index}
+                        options={options}
+                        showSelection={showSelection}
+                        selected={selected.includes(column.id)}
+                        removeColumnHandler={removeColumnHandler}
+                        updateColumnHandler={updateColumnHandler(column.id)}
+                        createCardHandler={createCardHandler(column.id)}
+                        removeCardHandler={removeCardHandler(column.id)}
+                        openAllCardsHandler={openAllCardsHandler}
+                        clipboardHandler={clipboardHandler}
+                        collapseHandler={collapseHandler(column.id)}
+                        selectionHandler={selectionHandler}
+                        setShowSelection={setShowSelection}
+                      ></Column>
+                    );
+                  })}
+                  {provided.placeholder}
+                  {options.showCollapsed ? (
+                    <CollapsedColumns
+                      columns={columns}
+                      collapsedOrder={collapsedOrder}
+                      showSelection={showSelection}
+                      selected={selected}
                       removeColumnHandler={removeColumnHandler}
-                      updateColumnHandler={updateColumnHandler(column.id)}
-                      createCardHandler={createCardHandler(column.id)}
-                      removeCardHandler={removeCardHandler(column.id)}
+                      updateColumnHandler={updateColumnHandler}
                       openAllCardsHandler={openAllCardsHandler}
                       clipboardHandler={clipboardHandler}
-                      collapseHandler={collapseHandler(column.id)}
-                    ></Column>
-                  );
-                })}
-                {provided.placeholder}
-                {options.showCollapsed ? (
-                  <CollapsedColumns
-                    columns={columns}
-                    collapsedOrder={collapsedOrder}
-                    removeColumnHandler={removeColumnHandler}
-                    updateColumnHandler={updateColumnHandler}
-                    openAllCardsHandler={openAllCardsHandler}
-                    clipboardHandler={clipboardHandler}
-                    collapseHandler={collapseHandler}
-                  />
-                ) : (
-                  <></>
-                )}
-              </div>
-            )}
+                      collapseHandler={collapseHandler}
+                      selectionHandler={selectionHandler}
+                      setShowSelection={setShowSelection}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              );
+            }}
           </Droppable>
         </DragDropContext>
       </div>

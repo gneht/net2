@@ -1,0 +1,9 @@
+.dropdown-container {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.dropdown-wrapper:hover .dropdown-container {
+  visibility: visible;
+  opacity: 1;
+}

@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html.snapWrapTrue {
+  scroll-snap-type: x mandatory;
+  scroll-padding: 4rem;
+}
+
+html.snapWrapTrue body {
+  scroll-snap-type: x mandatory;
+  scroll-padding: 4rem;
+}
+
+body {
+  overflow-y: hidden;
+}
+
+.snapWrapTrue .snapChild > div {
+  scroll-snap-align: center;
+}
+
+html.snapWrapFalse {
+  scroll-snap-type: none;
+}
+
+html.snapWrapFalse body {
+  scroll-snap-type: none;
+}
+.snapWrapFalse .snapChild > div {
+  scroll-snap-align: none;
+}
+
+@screen sm {
+  .snapWrapTrue .snapChild > div {
+    scroll-snap-align: start;
+  }
+}
