@@ -1,26 +1,18 @@
 import { useState } from "react";
-import { OPTIONS } from "../types";
+import { useMain } from "../context/main";
+
+import handleGenerateLink from "../handlers/handleGenerateLink";
+import toastGenerateLink from "./toasts/toastGenerateLink";
 
 const Header = (props: {
-  options: OPTIONS;
-  setOptions: (options: OPTIONS) => any;
   selected: Array<string>;
-  setSelected: (selected: Array<string>) => any;
   showSelection: boolean;
+  setSelected: (selected: Array<string>) => any;
   setShowSelection: (showSelection: boolean) => any;
-  generateLinkHandler: (columnIds: Array<string>) => any;
-  columnsCount: number;
 }) => {
-  const {
-    options,
-    setOptions,
-    selected,
-    setSelected,
-    showSelection,
-    setShowSelection,
-    generateLinkHandler,
-    columnsCount,
-  } = props;
+  const { selected, showSelection, setSelected, setShowSelection } = props;
+
+  const { cards, columns, columnOrder, options, setOptions } = useMain();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -40,20 +32,32 @@ const Header = (props: {
         </div>
 
         <div className="-mr-2 -my-2 flex space-x-2 md:hidden">
-          {columnsCount > 0 && (
+          {columnOrder.length > 0 && (
             <div>
               {showSelection ? (
                 <div className="flex space-x-3">
+                  {selected.length !== 0 && (
+                    <button
+                      type="button"
+                      className="bg-blue-100 rounded-md px-3 py-2 text-blue-500 inline-flex items-center text-base font-medium hover:text-blue-900 focus:outline-none ring-2 ring-offset-2 ring-gray-blue focus:ring-gray-blue"
+                      onClick={async () => {
+                        const link: string = await handleGenerateLink(
+                          selected,
+                          cards,
+                          columns,
+                          columnOrder
+                        );
+                        toastGenerateLink(link);
+                        setShowSelection(false);
+                        setSelected([]);
+                      }}
+                    >
+                      Generate Link
+                    </button>
+                  )}
                   <button
                     type="button"
-                    className="bg-blue-100 rounded-md px-3 py-2 text-blue-500 inline-flex items-center text-base font-medium hover:text-blue-900 focus:outline-none ring-2 ring-offset-2 ring-gray-blue focus:ring-gray-blue"
-                    onClick={() => generateLinkHandler(selected)}
-                  >
-                    Generate Link
-                  </button>
-                  <button
-                    type="button"
-                    className="bg-white rounded-md px-2 py-2 text-gray-500 inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                    className="bg-white rounded-md px-2 py-2 text-yellow-500 inline-flex items-center text-base font-medium hover:text-yellow-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
                     onClick={() => {
                       setShowSelection(false);
                       setSelected([]);
@@ -108,7 +112,7 @@ const Header = (props: {
           {!showSelection && (
             <button
               type="button"
-              className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
+              className={`bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-${options.theme}-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500`}
               onClick={() => {
                 setMenuOpen(!menuOpen);
               }}
@@ -134,21 +138,30 @@ const Header = (props: {
         </div>
 
         <div className="hidden md:flex items-baseline justify-end md:flex-1 lg:w-0 space-x-4">
-          {columnsCount > 0 && (
+          {columnOrder.length > 0 && (
             <div>
               {showSelection ? (
                 <div className="space-x-4">
-                  <button
-                    type="button"
-                    className="bg-blue-100 rounded-md px-4 py-2 text-blue-500 inline-flex items-center text-base font-medium hover:text-blue-900 focus:outline-none ring-2 ring-offset-2 ring-gray-blue focus:ring-gray-blue"
-                    onClick={() => {
-                      generateLinkHandler(selected);
-                      setShowSelection(false);
-                      setSelected([]);
-                    }}
-                  >
-                    Generate Link
-                  </button>
+                  {selected.length !== 0 && (
+                    <button
+                      type="button"
+                      className="bg-blue-100 rounded-md px-4 py-2 text-blue-500 inline-flex items-center text-base font-medium hover:text-blue-900 focus:outline-none ring-2 ring-offset-2 ring-gray-blue focus:ring-gray-blue"
+                      onClick={async () => {
+                        const link: string = await handleGenerateLink(
+                          selected,
+                          cards,
+                          columns,
+                          columnOrder
+                        );
+                        toastGenerateLink(link);
+                        setShowSelection(false);
+                        setSelected([]);
+                      }}
+                    >
+                      Generate Link
+                    </button>
+                  )}
+
                   <button
                     type="button"
                     className="bg-white rounded-md px-4 py-2 text-yellow-500 inline-flex items-center text-base font-medium hover:text-yellow-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
@@ -303,7 +316,7 @@ const Header = (props: {
                 </span>
                 <button
                   type="button"
-                  className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
+                  className={`bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-${options.theme}-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500`}
                   onClick={() => {
                     setMenuOpen(!menuOpen);
                   }}

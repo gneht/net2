@@ -1,17 +1,20 @@
 import { CARDS, COLUMNS, OPTIONS } from "../types";
 import retrieveTitles from "./retrieveTitles";
+import retrieveColumnId from "./retrieveColumnId";
 
-const handleCreateColumn = (
+const handleCreateColumn = async (
   title: string,
+  imports: string,
+
   cards: CARDS,
-  setCards: (cards: CARDS) => any,
   columns: COLUMNS,
-  options: OPTIONS,
-  setColumns: (columns: COLUMNS) => any,
   columnOrder: Array<string>,
-  setColumnOrder: (columnOrder: Array<string>) => any,
   collapsedOrder: Array<string>,
-  imports: string
+  options: OPTIONS,
+
+  setCards: (cards: CARDS) => any,
+  setColumns: (columns: COLUMNS) => any,
+  setColumnOrder: (columnOrder: Array<string>) => any
 ) => {
   let newCards: { [id: string]: any } = {};
   let cardIds: Array<string> = [];
@@ -40,6 +43,9 @@ const handleCreateColumn = (
           break;
         }
       }
+
+      // cardId = await retrieveCardId(cards);
+
       newCards[cardId] = {
         id: cardId,
         text: parsedMatches[i][1],
@@ -48,72 +54,55 @@ const handleCreateColumn = (
       cardIds.unshift(cardId);
     }
 
-    setCards({ ...newCards, ...cards });
+    await setCards({ ...newCards, ...cards });
   } else {
     const regexLink = /(https?:\/\/[^\s]+)/g;
     let matches = imports.match(regexLink) || [];
 
-    retrieveTitles(matches).then((res) => {
-      for (let i = 0; i < matches.length; i++) {
-        while (true) {
-          cardId = "t" + t;
-          t++;
-          if (!cards.hasOwnProperty(cardId)) {
-            break;
-          }
-        }
-        newCards[cardId] = {
-          id: cardId,
-          text: res[i],
-          url: matches[i],
-        };
-        cardIds.unshift(cardId);
-      }
-      setCards({ ...newCards, ...cards });
+    let res = await retrieveTitles(matches);
 
-      /* REPEATED CODE: OPTIMIZE */
-
-      // Update columns
-      let newColumnId;
-      let i = 0;
-      const concatenated = columnOrder.concat(collapsedOrder);
+    for (let i = 0; i < matches.length; i++) {
       while (true) {
-        newColumnId = "c" + i;
-        if (!concatenated.includes(newColumnId)) {
+        cardId = "t" + t;
+        t++;
+        if (!cards.hasOwnProperty(cardId)) {
           break;
         }
-        i++;
       }
 
-      const newColumn = {
-        id: newColumnId,
-        title: Boolean(title) ? title : "",
-        cardIds: cardIds,
+      newCards[cardId] = {
+        id: cardId,
+        text: res[i],
+        url: matches[i],
       };
+      cardIds.unshift(cardId);
+    }
+    await setCards({ ...newCards, ...cards });
 
-      setColumns({
-        ...columns,
-        [newColumnId]: newColumn,
-      });
+    /* REPEATED CODE: OPTIMIZE */
 
-      // Update columnOrder
-      setColumnOrder([newColumnId, ...columnOrder]);
-      return;
+    // Update columns
+    let newColumnId = await retrieveColumnId(columnOrder, collapsedOrder);
+
+    const newColumn = {
+      id: newColumnId,
+      title: Boolean(title) ? title : "",
+      cardIds: cardIds,
+    };
+
+    await setColumns({
+      ...columns,
+      [newColumnId]: newColumn,
     });
+
+    // Update columnOrder
+    await setColumnOrder([newColumnId, ...columnOrder]);
+
     return;
   }
 
   // Update columns
-  let newColumnId;
-  let i = 0;
-  const concatenated = columnOrder.concat(collapsedOrder);
-  while (true) {
-    newColumnId = "c" + i;
-    if (!concatenated.includes(newColumnId)) {
-      break;
-    }
-    i++;
-  }
+  let newColumnId = await retrieveColumnId(columnOrder, collapsedOrder);
 
   const newColumn = {
     id: newColumnId,
@@ -121,13 +110,18 @@ const handleCreateColumn = (
     cardIds: cardIds,
   };
 
-  setColumns({
+  console.log({
+    ...columns,
+    [newColumnId]: newColumn,
+  });
+
+  await setColumns({
     ...columns,
     [newColumnId]: newColumn,
   });
 
   // Update columnOrder
-  setColumnOrder([newColumnId, ...columnOrder]);
+  await setColumnOrder([newColumnId, ...columnOrder]);
 };
 
 export default handleCreateColumn;

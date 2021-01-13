@@ -1,12 +1,12 @@
 import { COLUMNS } from "../types";
 
-const handleDragEnd = (
+const handleDragEnd = async (
   result: any,
   columns: COLUMNS,
-  setColumns: (columns: COLUMNS) => any,
   columnOrder: Array<string>,
-  setColumnOrder: (columnOrder: Array<string>) => any,
   collapsedOrder: Array<string>,
+  setColumns: (columns: COLUMNS) => any,
+  setColumnOrder: (columnOrder: Array<string>) => any,
   setCollapsedOrder: (collapsedOrder: Array<string>) => any
 ) => {
   const { destination, source, draggableId, type } = result;
@@ -56,7 +56,7 @@ const handleDragEnd = (
     };
 
     // Update board state (useState)
-    setColumns({ ...columns, [newColumn.id]: newColumn });
+    await setColumns({ ...columns, [newColumn.id]: newColumn });
     return;
   }
 
@@ -80,7 +80,7 @@ const handleDragEnd = (
   };
 
   // Update board state (useState)
-  setColumns({
+  await setColumns({
     ...columns,
     [newStart.id]: newStart,
     [newFinish.id]: newFinish,

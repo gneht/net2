@@ -9,11 +9,11 @@
   border-radius: 5px;
 }
 
-#scrollDiv::-webkit-scrollbar-track {
+#scrollDiv::-webkit-scrollbar-thumb {
   transition: background-color 0.2s ease;
 
   --tw-bg-opacity: 1;
-  background: rgba(243, 244, 246, var(--tw-bg-opacity));
+  background: rgba(229, 231, 235, var(--tw-bg-opacity));
   border-radius: 4px;
 }
 

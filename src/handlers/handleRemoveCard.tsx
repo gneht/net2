@@ -1,19 +1,13 @@
 import { CARDS, COLUMNS } from "../types";
 
-const handleRemoveCard = (
+const handleRemoveCard = async (
   columnId: string,
   cardId: string,
   cards: CARDS,
-  setCards: (cards: CARDS) => any,
   columns: COLUMNS,
+  setCards: (cards: CARDS) => any,
   setColumns: (columns: COLUMNS) => any
 ) => {
-  // Remove card
-  let newCards = cards;
-  delete newCards[cardId];
-
-  setCards(newCards);
-
   // Update column
   const oldColumn = columns[columnId];
   const newCardIds = Array.from(oldColumn.cardIds);
@@ -23,10 +17,17 @@ const handleRemoveCard = (
     cardIds: newCardIds,
   };
 
-  setColumns({
+  await setColumns({
     ...columns,
     [newColumn.id]: newColumn,
   });
+
+  // Remove card
+  let newCards = cards;
+  delete newCards[cardId];
+
+  await setCards(newCards);
+
   return;
 };
 

@@ -1,6 +1,6 @@
 import { COLUMNS } from "../types";
 
-const handleUpdateColumn = (
+const handleUpdateColumn = async (
   columnId: string,
   title: string,
   columns: COLUMNS,
@@ -11,7 +11,7 @@ const handleUpdateColumn = (
     title: title,
   };
 
-  setColumns({
+  await setColumns({
     ...columns,
     [columnId]: newColumn,
   });

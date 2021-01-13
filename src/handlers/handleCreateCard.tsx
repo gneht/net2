@@ -1,25 +1,18 @@
 import { CARD, CARDS, COLUMNS, OPTIONS } from "../types";
 import retrieveTitle from "./retrieveTitle";
+import retrieveCardId from "./retrieveCardId";
 
-const handleCreateCard = (
+const handleCreateCard = async (
   columnId: string,
   url: string,
   cards: CARDS,
-  setCards: (cards: CARDS) => any,
   columns: COLUMNS,
-  setColumns: (columns: COLUMNS) => any,
-  options: OPTIONS
+  options: OPTIONS,
+  setCards: (cards: CARDS) => any,
+  setColumns: (columns: COLUMNS) => any
 ) => {
   // Find available card id
-  let newCardId: string;
-  let i = 0;
-  while (true) {
-    newCardId = "t" + i;
-    if (!cards.hasOwnProperty(newCardId)) {
-      break;
-    }
-    i++;
-  }
+  let newCardId = await retrieveCardId(cards);
 
   // Check if markdown link
   if (options.markdownLinks) {
@@ -36,14 +29,14 @@ const handleCreateCard = (
         text: match[1],
         url: match[2],
       };
-      setCards({
+      await setCards({
         ...cards,
         [newCard.id]: newCard,
       });
       // Update column
       let newColumn = columns[columnId];
       newColumn.cardIds.push(newCardId);
-      setColumns({
+      await setColumns({
         ...columns,
         [newColumn.id]: newColumn,
       });
@@ -52,30 +45,25 @@ const handleCreateCard = (
   }
 
   // SELF HOSTING SHOULD SPEED THIS UP (BUT BY HOW MUCH?)
-  retrieveTitle(url)
-    .then((res) => {
-      let newCard: CARD;
-      newCard = {
-        id: newCardId,
-        text: res,
-        url: url,
-      };
-      setCards({
-        ...cards,
-        [newCard.id]: newCard,
-      });
-      // Update column
-      let newColumn = columns[columnId];
-      newColumn.cardIds.push(newCardId);
-      setColumns({
-        ...columns,
-        [newColumn.id]: newColumn,
-      });
-      return;
-    })
-    .catch((res) => {
-      console.log(res);
-    });
+  let res = await retrieveTitle(url);
+  let newCard: CARD;
+  newCard = {
+    id: newCardId,
+    text: res,
+    url: url,
+  };
+  await setCards({
+    ...cards,
+    [newCard.id]: newCard,
+  });
+  // Update column
+  let newColumn = columns[columnId];
+  newColumn.cardIds.push(newCardId);
+  await setColumns({
+    ...columns,
+    [newColumn.id]: newColumn,
+  });
+  return;
 };
 
 export default handleCreateCard;

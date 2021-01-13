@@ -1,16 +1,17 @@
 import { CARDS, COLUMNS } from "../types";
 
-const handleRemoveColumn = (
+const handleRemoveColumn = async (
   columnId: string,
   cards: CARDS,
-  setCards: (cards: CARDS) => any,
   columns: COLUMNS,
-  setColumns: (columns: COLUMNS) => any,
   columnOrder: Array<string>,
-  setColumnOrder: (columnOrder: Array<string>) => any,
   collapsedOrder: Array<string>,
+  setCards: (cards: CARDS) => any,
+  setColumns: (columns: COLUMNS) => any,
+  setColumnOrder: (columnOrder: Array<string>) => any,
   setCollapsedOrder: (collapsedOrder: Array<string>) => any
 ) => {
+  // Delete Column
   const newColumns = columns;
   const removedCards = newColumns[columnId].cardIds;
 
@@ -20,12 +21,17 @@ const handleRemoveColumn = (
     cardId = removedCards[i];
     delete newCards[cardId];
   }
+
   delete newColumns[columnId];
-  setCards(newCards);
-  setColumns(newColumns);
-  setColumnOrder(columnOrder.filter((e) => e !== columnId));
-  setCollapsedOrder(collapsedOrder.filter((e) => e !== columnId));
-  return;
+
+  await setColumnOrder(columnOrder.filter((e) => e !== columnId));
+  await setCollapsedOrder(collapsedOrder.filter((e) => e !== columnId));
+  await setColumns(newColumns);
+  await setCards(newCards);
+
+  return new Promise((resolve) => {
+    resolve(null);
+  });
 };
 
 export default handleRemoveColumn;

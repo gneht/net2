@@ -1,4 +1,6 @@
 import { useState, useRef } from "react";
+import { useMain } from "../context/main";
+
 import { COLUMN } from "../types";
 import "./ColumnHeader.css";
 
@@ -17,6 +19,8 @@ function ColumnHeader(props: {
   dragHandleProps: any;
   showCardCount?: boolean;
 }) {
+  const { options } = useMain();
+
   const {
     column,
     removeColumnHandler,
@@ -122,7 +126,7 @@ function ColumnHeader(props: {
           <div className="flex flex-col dropdown-container transition-all duration-150 absolute top-4 right-0 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
             {collapse ? (
               <button
-                className="block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
                 onClick={() => collapseHandler(collapse)}
               >
                 <div className="flex-initial w-4 h-4">
@@ -144,7 +148,7 @@ function ColumnHeader(props: {
               </button>
             ) : (
               <button
-                className="block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
                 onClick={() => collapseHandler(collapse)}
               >
                 <div className="flex-initial w-4 h-4">
@@ -166,7 +170,7 @@ function ColumnHeader(props: {
               </button>
             )}
             <button
-              className="block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
               onClick={() => openAllCardsHandler(column.id)}
             >
               <div className="flex-initial w-4 h-4">
@@ -187,7 +191,7 @@ function ColumnHeader(props: {
               <p>Open</p>
             </button>
             <button
-              className="block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
               onClick={() => clipboardHandler(column.id)}
             >
               <div className="flex-initial w-4 h-4">
@@ -208,7 +212,7 @@ function ColumnHeader(props: {
               <p className="flex-initial">Copy</p>
             </button>
             <button
-              className="block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
               onClick={() => {
                 selectionHandler(column.id);
                 setShowSelection(true);

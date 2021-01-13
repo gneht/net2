@@ -1,11 +1,11 @@
 import { CARD, CARDS, COLUMN, COLUMNS } from "../types";
 
-const handleGenerateLink = (
+const handleGenerateLink: (
   columnIds: Array<string>,
   cards: CARDS,
   columns: COLUMNS,
   columnOrder: Array<string>
-) => {
+) => Promise<string> = async (columnIds, cards, columns, columnOrder) => {
   // Define request data
   let generatedColumns: COLUMNS = {};
   let generatedCards: CARDS = {};
@@ -47,9 +47,12 @@ const handleGenerateLink = (
   //     }),
   //   });
 
-  // Open link (or just copy it to clipboard and send toast?)
-  // Or just toast the link
-  return;
+  // return link
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("https://tailwindcss.com/");
+    }, 2000);
+  });
 };
 
 export default handleGenerateLink;

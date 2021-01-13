@@ -16,11 +16,14 @@ function Column(props: {
   showSelection: boolean;
   selected: boolean;
   setShowSelection: (showSelection: boolean) => any;
-  createCardHandler: (text: string) => any;
+
+  createCardHandler: (columnId: string) => any;
   removeCardHandler: (cardId: string) => any;
-  removeColumnHandler: (columnId: string) => any;
-  clipboardHandler: (columnId: string) => any;
+
   updateColumnHandler: (title: string) => any;
+  removeColumnHandler: (columnId: string) => any;
+
+  clipboardHandler: (columnId: string) => any;
   openAllCardsHandler: (columnId: string) => any;
   collapseHandler: (collapse: boolean) => any;
   selectionHandler: (columnId: string) => any;
@@ -33,11 +36,14 @@ function Column(props: {
     showSelection,
     selected,
     setShowSelection,
+
     createCardHandler,
     removeCardHandler,
-    removeColumnHandler,
-    clipboardHandler,
+
     updateColumnHandler,
+    removeColumnHandler,
+
+    clipboardHandler,
     openAllCardsHandler,
     collapseHandler,
     selectionHandler,
@@ -72,7 +78,7 @@ function Column(props: {
                 <div
                   id="scrollDiv"
                   className={`${
-                    snapshot.isDraggingOver ? "bg-gray-100" : ""
+                    snapshot.isDraggingOver ? `bg-${options.theme}-100` : ""
                   } p-4 space-y-4 transition max-h-80 overflow-y-auto shadow-inner`}
                   ref={provided.innerRef}
                   {...provided.droppableProps}
@@ -101,7 +107,7 @@ function Column(props: {
             </Droppable>
             <ColumnFooter
               options={options}
-              createCardHandler={createCardHandler}
+              createCardHandler={createCardHandler(column.id)}
             />
           </div>
         </div>

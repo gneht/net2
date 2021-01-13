@@ -22,4 +22,5 @@ export interface OPTIONS {
   markdownLinks: boolean;
   openOnLaunch: boolean;
   showCollapsed: boolean;
+  theme: string;
 }

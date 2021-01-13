@@ -1,38 +1,72 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { Mutex } from "async-mutex";
 
-import { CARDS, COLUMNS, OPTIONS } from "./types";
+import { MainContext } from "./context/main";
+
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
 import Header from "./components/Header";
 import NewColumnComponent from "./components/NewColumnComponent";
 import Column from "./components/Column";
 import CollapsedColumns from "./components/CollapsedColumns";
+import WrappedToastContainer from "./components/WrappedToastContainer";
 
 import handleDragEnd from "./handlers/handleDragEnd";
-import handleCreateCard from "./handlers/handleCreateCard";
-import handleRemoveCard from "./handlers/handleRemoveCard";
-import handleCreateColumn from "./handlers/handleCreateColumn";
-import handleRemoveColumn from "./handlers/handleRemoveColumn";
 import handleClipboard from "./handlers/handleClipboard";
 import handleUpdateColumn from "./handlers/handleUpdateColumn";
 import handleOpenAllCards from "./handlers/handleOpenAllCards";
 import handleCollapse from "./handlers/handleCollapse";
-import handleGenerateLink from "./handlers/handleGenerateLink";
+
+import toastCollapse from "./components/toasts/toastCollapse";
+import toastClipboard from "./components/toasts/toastClipboard";
 
 import emptyState from "./assets/undraw_blank_canvas_3rbb.svg";
 
-import "./App.css";
+import { CARDS, COLUMNS, OPTIONS } from "./types";
 
-const App = () => {
-  const [cards, setCards] = useState<CARDS>({});
-  const [columns, setColumns] = useState<COLUMNS>({});
-  const [columnOrder, setColumnOrder] = useState<Array<string>>([]);
-  const [collapsedOrder, setCollapsedOrder] = useState<Array<string>>([]);
+const App = (props: {
+  cards: CARDS;
+  columns: COLUMNS;
+  columnOrder: Array<string>;
+  collapsedOrder: Array<string>;
+  setCards: (cards: CARDS) => any;
+  setColumns: (columns: COLUMNS) => any;
+  setColumnOrder: (columnOrder: Array<string>) => any;
+  setCollapsedOrder: (collapsedOrder: Array<string>) => any;
+  createCardHandler: (options: OPTIONS, cardMutexRef: any) => any;
+  createColumnHandler: (
+    options: OPTIONS,
+    columnMutexRef: any,
+    setColumnOrder: (columnOrder: Array<string>) => any
+  ) => any;
+  removeCardHandler: (columnId: string) => any;
+  removeColumnHandler: (columnId: string) => any;
+}) => {
+  const {
+    cards,
+    columns,
+    columnOrder,
+    collapsedOrder,
+    setCards,
+    setColumns,
+    setColumnOrder,
+    setCollapsedOrder,
+    createCardHandler,
+    createColumnHandler,
+    removeCardHandler,
+    removeColumnHandler,
+  } = props;
+
+  const cardMutexRef = useRef(new Mutex());
+  const columnMutexRef = useRef(new Mutex());
 
   const [options, setOptions] = useState<OPTIONS>({
     markdownLinks: false,
     openOnLaunch: true,
     showCollapsed: true,
+    theme: "gray",
   });
 
   const [snap, setSnap] = useState<boolean>(true);
@@ -113,60 +147,17 @@ const App = () => {
     handleDragEnd(
       result,
       columns,
-      setColumns,
       columnOrder,
-      setColumnOrder,
       collapsedOrder,
+      setColumns,
+      setColumnOrder,
       setCollapsedOrder
     );
     setSnap(true);
   };
 
-  const createColumnHandler = (title: string, imports: string) => {
-    handleCreateColumn(
-      title,
-      cards,
-      setCards,
-      columns,
-      options,
-      setColumns,
-      columnOrder,
-      setColumnOrder,
-      collapsedOrder,
-      imports
-    );
-  };
-  const removeColumnHandler = (columnId: string) => {
-    handleRemoveColumn(
-      columnId,
-      cards,
-      setCards,
-      columns,
-      setColumns,
-      columnOrder,
-      setColumnOrder,
-      collapsedOrder,
-      setCollapsedOrder
-    );
-  };
   const updateColumnHandler = (columnId: string) => (title: string) => {
     handleUpdateColumn(columnId, title, columns, setColumns);
-  };
-
-  const createCardHandler = (columnId: string) => (url: string) => {
-    handleCreateCard(
-      columnId,
-      url,
-      cards,
-      setCards,
-      columns,
-      setColumns,
-      options
-    );
-  };
-
-  const removeCardHandler = (columnId: string) => (cardId: string) => {
-    handleRemoveCard(columnId, cardId, cards, setCards, columns, setColumns);
   };
 
   const openAllCardsHandler = (columnId: string) => {
@@ -175,6 +166,7 @@ const App = () => {
 
   const clipboardHandler = (columnId: string) => {
     handleClipboard(columnId, cards, columns, options);
+    toastClipboard();
   };
 
   const collapseHandler = (columnId: string) => (collapsed: boolean) => {
@@ -186,20 +178,7 @@ const App = () => {
       collapsedOrder,
       setCollapsedOrder
     );
-  };
-
-  const generateLinkHandler = (columnIds: Array<string>) => {
-    /* 
-    We need: 
-    a way to start selection, 
-    a way to select a column
-    a way to deselect a column
-    a way to stop selection
-    an indication that a column has been selected 
-    submit button, 
-    toast or open link
-    */
-    handleGenerateLink(columnIds, cards, columns, columnOrder);
+    toastCollapse(collapsed);
   };
 
   const selectionHandler = (columnId: string) => {
@@ -211,112 +190,158 @@ const App = () => {
   };
 
   return (
-    <div className="h-screen">
-      <Header
-        options={options}
-        setOptions={setOptions}
-        selected={selected}
-        setSelected={setSelected}
-        showSelection={showSelection}
-        setShowSelection={setShowSelection}
-        generateLinkHandler={generateLinkHandler}
-        columnsCount={columnOrder.length}
-      ></Header>
-      <div style={{ position: "absolute", top: "20%" }} className="h-4/5">
-        <DragDropContext
-          onBeforeDragStart={onBeforeDragStart}
-          onDragStart={onDragStart}
-          onDragUpdate={onDragUpdate}
-          onDragEnd={onDragEnd}
-        >
-          <Droppable
-            droppableId="all-columns"
-            direction="horizontal"
-            type="column"
+    <MainContext.Provider
+      value={{
+        cards,
+        columns,
+        columnOrder,
+        collapsedOrder,
+        options,
+        cardMutexRef,
+        columnMutexRef,
+        setCards,
+        setColumns,
+        setColumnOrder,
+        setCollapsedOrder,
+        setOptions,
+      }}
+    >
+      <div className="h-screen">
+        <Header
+          selected={selected}
+          setSelected={setSelected}
+          showSelection={showSelection}
+          setShowSelection={setShowSelection}
+        ></Header>
+        <div style={{ position: "absolute", top: "20%" }} className="h-4/5">
+          <DragDropContext
+            onBeforeDragStart={onBeforeDragStart}
+            onDragStart={onDragStart}
+            onDragUpdate={onDragUpdate}
+            onDragEnd={onDragEnd}
           >
-            {(provided) => {
-              return (
-                <div
-                  className={`snapChild pt-16 px-16 flex items-start w-max`}
-                  // https://stackoverflow.com/questions/37112218/css3-100vh-not-constant-in-mobile-browser
-                  style={{ minHeight: "-webkit-fill-available" }}
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                >
-                  <NewColumnComponent
-                    options={options}
-                    createColumnHandler={createColumnHandler}
-                  />
-                  {columnOrder.length === 0 ? (
-                    <div
-                      className={`w-80 h-96 flex flex-col justify-evenly items-center space-y-6 flex-none m-4 rounded-md shadow-md ring-1 ring-black ring-opacity-5 bg-gray-100`}
-                    >
-                      <img
-                        className="w-64 flex-initial"
-                        src={emptyState}
-                        style={{ filter: "grayscale(100%)" }}
-                        alt="Empty State"
-                      />
-                      <div className="flex-initial flex flex-col items-center">
-                        <h4 className="text-lg font-medium text-gray-500">
-                          You haven't saved any links!
-                        </h4>
-                        <p className="text-gray-500">
-                          How about creating a new column?
-                        </p>
+            <Droppable
+              droppableId="all-columns"
+              direction="horizontal"
+              type="column"
+            >
+              {(provided) => {
+                return (
+                  <div
+                    className={`snapChild pt-16 px-16 flex items-start w-max`}
+                    // https://stackoverflow.com/questions/37112218/css3-100vh-not-constant-in-mobile-browser
+                    style={{ minHeight: "-webkit-fill-available" }}
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
+                    <NewColumnComponent
+                      createColumnHandler={createColumnHandler(
+                        options,
+                        columnMutexRef,
+                        setColumnOrder
+                      )}
+                    />
+                    {columnOrder.length === 0 ? (
+                      <div
+                        className={`w-80 h-96 flex flex-col justify-evenly items-center space-y-6 flex-none m-4 rounded-md shadow-md ring-1 ring-black ring-opacity-5 bg-${options.theme}-100`}
+                      >
+                        <img
+                          className="w-64 flex-initial"
+                          src={emptyState}
+                          style={{ filter: "grayscale(100%)" }}
+                          alt="Empty State"
+                        />
+                        <div className="flex-initial flex flex-col items-center">
+                          <h4 className="text-lg font-medium text-gray-500">
+                            You haven't saved any links!
+                          </h4>
+                          <p className="text-gray-500">
+                            How about creating a new column?
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                  {columnOrder.map((e, index) => {
-                    const column = columns[e];
-                    const columnCards = column.cardIds.map((c) => cards[c]);
-                    return (
-                      <Column
-                        key={column.id}
-                        column={column}
-                        cards={columnCards}
-                        index={index}
-                        options={options}
-                        showSelection={showSelection}
-                        selected={selected.includes(column.id)}
+                    ) : (
+                      <></>
+                    )}
+                    {columnOrder
+                      .filter((e) => {
+                        return columns[e];
+                      })
+                      .map((e, index) => {
+                        const column = columns[e];
+                        if (column) {
+                          const columnCards = column.cardIds.map(
+                            (c) => cards[c]
+                          );
+                          return (
+                            <Column
+                              key={column.id}
+                              /* Objects */
+                              column={column}
+                              cards={columnCards}
+                              index={index}
+                              options={options}
+                              showSelection={showSelection}
+                              selected={selected.includes(column.id)}
+                              /* Card handlers */
+                              createCardHandler={createCardHandler(
+                                options,
+                                cardMutexRef
+                              )}
+                              removeCardHandler={removeCardHandler(column.id)}
+                              /* Column Handlers */
+                              updateColumnHandler={updateColumnHandler(
+                                column.id
+                              )}
+                              removeColumnHandler={removeColumnHandler}
+                              /* Misc handlers */
+                              clipboardHandler={clipboardHandler}
+                              openAllCardsHandler={openAllCardsHandler}
+                              collapseHandler={collapseHandler(column.id)}
+                              selectionHandler={selectionHandler}
+                              setShowSelection={setShowSelection}
+                            ></Column>
+                          );
+                        } else {
+                          return <></>;
+                        }
+                      })}
+                    {provided.placeholder}
+                    {options.showCollapsed ? (
+                      <CollapsedColumns
+                        columns={columns}
+                        collapsedOrder={collapsedOrder}
+                        selected={selected}
                         removeColumnHandler={removeColumnHandler}
-                        updateColumnHandler={updateColumnHandler(column.id)}
-                        createCardHandler={createCardHandler(column.id)}
-                        removeCardHandler={removeCardHandler(column.id)}
+                        updateColumnHandler={updateColumnHandler}
                         openAllCardsHandler={openAllCardsHandler}
                         clipboardHandler={clipboardHandler}
-                        collapseHandler={collapseHandler(column.id)}
+                        collapseHandler={collapseHandler}
                         selectionHandler={selectionHandler}
                         setShowSelection={setShowSelection}
-                      ></Column>
-                    );
-                  })}
-                  {provided.placeholder}
-                  {options.showCollapsed ? (
-                    <CollapsedColumns
-                      columns={columns}
-                      collapsedOrder={collapsedOrder}
-                      selected={selected}
-                      removeColumnHandler={removeColumnHandler}
-                      updateColumnHandler={updateColumnHandler}
-                      openAllCardsHandler={openAllCardsHandler}
-                      clipboardHandler={clipboardHandler}
-                      collapseHandler={collapseHandler}
-                      selectionHandler={selectionHandler}
-                      setShowSelection={setShowSelection}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              );
-            }}
-          </Droppable>
-        </DragDropContext>
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                );
+              }}
+            </Droppable>
+          </DragDropContext>
+        </div>
+        <WrappedToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
-    </div>
+    </MainContext.Provider>
   );
 };
 
