@@ -74,8 +74,8 @@ const App = (props: {
   const [showSelection, setShowSelection] = useState<boolean>(false);
   const [selected, setSelected] = useState<Array<string>>([]);
 
-  useEffect(() => {
-    // Update board on load
+  /* For first load and updates from extension */
+  const loadBoard = () => {
     const storedCards = localStorage.getItem("cards");
     const storedColumns = localStorage.getItem("columns");
     const storedColumnOrder = localStorage.getItem("columnOrder");
@@ -100,6 +100,14 @@ const App = (props: {
       const parsedOptions = JSON.parse(storedOptions);
       setOptions(parsedOptions);
     }
+  };
+
+  useEffect(() => {
+    loadBoard();
+
+    window.onstorage = () => {
+      loadBoard();
+    };
   }, []);
 
   useEffect(() => {
@@ -228,7 +236,7 @@ const App = (props: {
               {(provided) => {
                 return (
                   <div
-                    className={`snapChild pt-16 px-16 flex items-start w-max`}
+                    className={`snapChild pt-16 px-16 flex items-start w-max transition-all duration-100 `}
                     // https://stackoverflow.com/questions/37112218/css3-100vh-not-constant-in-mobile-browser
                     style={{ minHeight: "-webkit-fill-available" }}
                     {...provided.droppableProps}

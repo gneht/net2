@@ -275,29 +275,30 @@ const Header = (props: {
           )}
 
           {!showSelection && (
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href="https://www.google.com/"
-              className="whitespace-nowrap group px-4 py-2 bg-white rounded-md text-gray-500 inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none ring-2 ring-offset-2 ring-gray-500 focus:ring-gray-900"
-            >
-              Log in{" "}
-              <div className="h-6 w-6">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-                  />
-                </svg>
-              </div>
-            </a>
+            <></>
+            // <a
+            //   target="_blank"
+            //   rel="noreferrer"
+            //   href="https://www.google.com/"
+            //   className="whitespace-nowrap group px-4 py-2 bg-white rounded-md text-gray-500 inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none ring-2 ring-offset-2 ring-gray-500 focus:ring-gray-900"
+            // >
+            //   Log in{" "}
+            //   <div className="h-6 w-6">
+            //     <svg
+            //       xmlns="http://www.w3.org/2000/svg"
+            //       fill="none"
+            //       viewBox="0 0 24 24"
+            //       stroke="currentColor"
+            //     >
+            //       <path
+            //         strokeLinecap="round"
+            //         strokeLinejoin="round"
+            //         strokeWidth="2"
+            //         d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+            //       />
+            //     </svg>
+            //   </div>
+            // </a>
           )}
         </div>
       </div>

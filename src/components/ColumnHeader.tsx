@@ -4,7 +4,7 @@ import { useMain } from "../context/main";
 import { COLUMN } from "../types";
 import "./ColumnHeader.css";
 
-function ColumnHeader(props: {
+const ColumnHeader = (props: {
   column: COLUMN;
   removeColumnHandler: (columnId: string) => any;
   clipboardHandler: (columnId: string) => any;
@@ -18,7 +18,7 @@ function ColumnHeader(props: {
   selectionHandler: (columnId: string) => any;
   dragHandleProps: any;
   showCardCount?: boolean;
-}) {
+}) => {
   const { options } = useMain();
 
   const {
@@ -211,30 +211,35 @@ function ColumnHeader(props: {
               </div>
               <p className="flex-initial">Copy</p>
             </button>
-            <button
-              className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
-              onClick={() => {
-                selectionHandler(column.id);
-                setShowSelection(true);
-              }}
-            >
-              <div className="flex-initial w-4 h-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                  />
-                </svg>
-              </div>
-              Share
-            </button>
+            {collapse ? (
+              <></>
+            ) : (
+              <button
+                className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
+                onClick={() => {
+                  selectionHandler(column.id);
+                  setShowSelection(true);
+                }}
+              >
+                <div className="flex-initial w-4 h-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                    />
+                  </svg>
+                </div>
+                Share
+              </button>
+            )}
+
             <button
               className="block px-4 py-2 inline-flex justify-evenly text-sm bg-red-50 text-red-700 hover:bg-red-100 hover:text-red-900"
               onClick={() => removeColumnHandler(column.id)}
@@ -261,6 +266,6 @@ function ColumnHeader(props: {
       </div>
     </div>
   );
-}
+};
 
 export default ColumnHeader;
