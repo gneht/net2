@@ -6,7 +6,7 @@ const retrieveColumnId = async (
     let columnId
     const concatenated = columnOrder.concat(collapsedOrder)
     while (true) {
-        columnId = 'c' + c
+        columnId = `c${c}`
         if (!concatenated.includes(columnId)) {
             break
         }

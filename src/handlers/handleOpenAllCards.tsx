@@ -9,11 +9,10 @@ const handleOpenAllCards = (
     let currentUrl
     for (let i = 0; i < columns[columnId].cardIds.length; i++) {
         currentUrl = cards[columns[columnId].cardIds[i]].url
-        if (Boolean(currentUrl)) {
+        if (currentUrl) {
             window.open(currentUrl)
         }
     }
-    return
 }
 
 export default handleOpenAllCards

@@ -8,14 +8,13 @@ const handleUpdateColumn = async (
 ) => {
     const newColumn = {
         ...columns[columnId],
-        title: title,
+        title,
     }
 
     await setColumns({
         ...columns,
         [columnId]: newColumn,
     })
-    return
 }
 
 export default handleUpdateColumn

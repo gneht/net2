@@ -87,8 +87,6 @@ const handleDragEnd = async (
     })
 
     // Update board in localStorage (done via useEffect)
-
-    return
 }
 
 export default handleDragEnd

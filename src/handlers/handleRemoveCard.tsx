@@ -23,12 +23,10 @@ const handleRemoveCard = async (
     })
 
     // Remove card
-    let newCards = cards
+    const newCards = cards
     delete newCards[cardId]
 
     await setCards(newCards)
-
-    return
 }
 
 export default handleRemoveCard

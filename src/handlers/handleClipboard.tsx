@@ -11,15 +11,14 @@ const handleClipboard = (
     for (let i = 0; i < columns[columnId].cardIds.length; i++) {
         card = cards[columns[columnId].cardIds[i]]
         if (options.markdownLinks) {
-            out += '[' + card.text + '](' + card.url + ')\n'
+            out += `[${card.text}](${card.url})\n`
         } else {
-            out += card.url + '\n'
+            out += `${card.url}\n`
         }
     }
     navigator.clipboard.writeText(out)
 
     // Toast
-    return
 }
 
 export default handleClipboard

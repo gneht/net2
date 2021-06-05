@@ -5,7 +5,7 @@ const retrieveCardId = async (cards: CARDS) => {
     let cardId
 
     while (true) {
-        cardId = 't' + t
+        cardId = `t${t}`
         t++
         if (!cards.hasOwnProperty(cardId)) {
             break

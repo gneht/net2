@@ -13,7 +13,6 @@ const handleCollapse = (
         setCollapsedOrder([columnId, ...collapsedOrder])
         setColumnOrder(columnOrder.filter((c) => c !== columnId))
     }
-    return
 }
 
 export default handleCollapse

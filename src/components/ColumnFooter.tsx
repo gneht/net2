@@ -33,7 +33,7 @@ function ColumnFooter(props: {
                                 ? "'[text](url)' or 'url'"
                                 : 'url'
                         }
-                    ></input>
+                    />
                 </form>
             </div>
         </div>

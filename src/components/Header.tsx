@@ -238,7 +238,7 @@ const Header = (props: {
                                                     !options.markdownLinks,
                                             })
                                         }}
-                                    ></input>
+                                    />
                                     <label className="text-sm text-gray-700 whitespace-nowrap	">
                                         Markdown Mode
                                     </label>
@@ -254,7 +254,7 @@ const Header = (props: {
                                                     !options.openOnLaunch,
                                             })
                                         }}
-                                    ></input>
+                                    />
                                     <label className="text-sm text-gray-700 whitespace-nowrap	">
                                         Open On Launch
                                     </label>
@@ -270,7 +270,7 @@ const Header = (props: {
                                                     !options.showCollapsed,
                                             })
                                         }}
-                                    ></input>
+                                    />
                                     <label className="text-sm text-gray-700 whitespace-nowrap	">
                                         Show Collapsed
                                     </label>
@@ -361,7 +361,7 @@ const Header = (props: {
                                                 !options.markdownLinks,
                                         })
                                     }}
-                                ></input>
+                                />
                                 <label>Markdown mode </label>
                             </div>
                             <div className="block inline-flex items-baseline space-x-2">
@@ -374,7 +374,7 @@ const Header = (props: {
                                             openOnLaunch: !options.openOnLaunch,
                                         })
                                     }}
-                                ></input>
+                                />
                                 <label>Open On Launch </label>
                             </div>
                             <div className="block inline-flex items-baseline space-x-2">
@@ -388,7 +388,7 @@ const Header = (props: {
                                                 !options.showCollapsed,
                                         })
                                     }}
-                                ></input>
+                                />
                                 <label>Show Collapsed </label>
                             </div>
                         </div>

@@ -77,7 +77,7 @@ const ColumnHeader = (props: {
                         onChange={() => {
                             selectionHandler(column.id)
                         }}
-                    ></input>
+                    />
                 </div>
             )}
             <div className="relative">
@@ -85,7 +85,7 @@ const ColumnHeader = (props: {
                     <div
                         className="absolute inset-0 cursor-pointer"
                         onClick={onTargetClick}
-                    ></div>
+                    />
                 )}
                 <input
                     ref={input}
@@ -95,9 +95,9 @@ const ColumnHeader = (props: {
                     }}
                     onBlur={onBlur}
                     onKeyDown={handleKeydown}
-                    className={`bg-transparent text-gray-600 font-medium text-sm border-b-2 border-transparent focus:outline-none focus:border-gray-500 w-full`}
+                    className="bg-transparent text-gray-600 font-medium text-sm border-b-2 border-transparent focus:outline-none focus:border-gray-500 w-full"
                     placeholder="Untitled"
-                ></input>
+                />
             </div>
 
             <div className="flex items-baseline space-x-1">

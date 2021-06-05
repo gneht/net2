@@ -7,8 +7,8 @@ const handleGenerateLink: (
     columnOrder: Array<string>
 ) => Promise<string> = async (columnIds, cards, columns, columnOrder) => {
     // Define request data
-    let generatedColumns: COLUMNS = {}
-    let generatedCards: CARDS = {}
+    const generatedColumns: COLUMNS = {}
+    const generatedCards: CARDS = {}
 
     let currentColumn: COLUMN
     let currentCard: CARD

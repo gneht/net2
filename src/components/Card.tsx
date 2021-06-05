@@ -28,11 +28,8 @@ const Card = (props: {
                         className="h-5 w-5"
                         // style={{ filter: "grayscale(100%)" }}
                         alt="favicon"
-                        src={
-                            'http://www.google.com/s2/favicons?sz=64&domain=' +
-                            card.url
-                        }
-                    ></img>
+                        src={`http://www.google.com/s2/favicons?sz=64&domain=${card.url}`}
+                    />
                     <div>
                         <div className="text-gray-700">
                             {card.text ? card.text : card.url}

@@ -59,9 +59,7 @@ const Column = (props: {
                     {...provided.draggableProps}
                     ref={provided.innerRef}
                 >
-                    <div
-                        className={`w-80 flex-none m-4 rounded-md shadow-md ring-1 ring-black ring-opacity-5 bg-white`}
-                    >
+                    <div className="w-80 flex-none m-4 rounded-md shadow-md ring-1 ring-black ring-opacity-5 bg-white">
                         <ColumnHeader
                             column={column}
                             removeColumnHandler={removeColumnHandler}

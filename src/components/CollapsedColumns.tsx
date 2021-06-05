@@ -68,7 +68,7 @@ const CollapsedColumns = (props: {
                                                 ref={provided.innerRef}
                                             >
                                                 <div className="flex-none my-2 mx-2 w-80 rounded-md shadow-md ring-1 ring-black ring-opacity-5 bg-white">
-                                                    {/* This, including the line above, is the orignal drag/drop*/}
+                                                    {/* This, including the line above, is the orignal drag/drop */}
                                                     <ColumnHeader
                                                         column={column}
                                                         removeColumnHandler={
@@ -83,7 +83,7 @@ const CollapsedColumns = (props: {
                                                         openAllCardsHandler={
                                                             openAllCardsHandler
                                                         }
-                                                        collapse={true}
+                                                        collapse
                                                         collapseHandler={collapseHandler(
                                                             column.id
                                                         )}
@@ -100,7 +100,7 @@ const CollapsedColumns = (props: {
                                                         setShowSelection={
                                                             setShowSelection
                                                         }
-                                                        showCardCount={true}
+                                                        showCardCount
                                                     />
 
                                                     <Droppable

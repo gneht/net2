@@ -37,7 +37,7 @@ const NewColumnComponent = (props: {
                         onChange={(e) => setTitle(e.target.value)}
                         className={`p-1 w-full border-b-2 focus:outline-none focus:border-gray-500 bg-${options.theme}-50`}
                         placeholder="Column Title"
-                    ></input>
+                    />
                     <div className="flex flex-col items-end mt-2">
                         <button
                             type="button"
@@ -72,7 +72,7 @@ const NewColumnComponent = (props: {
                                             ? '[Google](https://www.google.com/)\n[Yale](https://www.yale.edu/)'
                                             : 'https://www.google.com/\nhttps://www.yale.edu'
                                     }`}
-                                ></textarea>
+                                />
                             </div>
                         ) : (
                             <></>

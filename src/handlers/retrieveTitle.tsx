@@ -11,7 +11,7 @@ const retrieveTitle = async (url: string) => {
         .catch((res) => {
             return 'ERROR'
         })
-    let matches = data.match(/<title>(.*?)<\/title>/)
+    const matches = data.match(/<title>(.*?)<\/title>/)
     if (matches) {
         return matches[1]
     }

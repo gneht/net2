@@ -15,7 +15,7 @@ const handleRemoveColumn = async (
     const newColumns = columns
     const removedCards = newColumns[columnId].cardIds
 
-    let newCards = cards
+    const newCards = cards
     let cardId
     for (let i = 0; i < removedCards.length; i++) {
         cardId = removedCards[i]

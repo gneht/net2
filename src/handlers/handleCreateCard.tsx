@@ -12,7 +12,7 @@ const handleCreateCard = async (
     setColumns: (columns: COLUMNS) => any
 ) => {
     // Find available card id
-    let newCardId = await retrieveCardId(cards)
+    const newCardId = await retrieveCardId(cards)
 
     // Check if markdown link
     if (options.markdownLinks) {
@@ -34,7 +34,7 @@ const handleCreateCard = async (
                 [newCard.id]: newCard,
             })
             // Update column
-            let newColumn = columns[columnId]
+            const newColumn = columns[columnId]
             newColumn.cardIds.push(newCardId)
             await setColumns({
                 ...columns,
@@ -45,25 +45,24 @@ const handleCreateCard = async (
     }
 
     // SELF HOSTING SHOULD SPEED THIS UP (BUT BY HOW MUCH?)
-    let res = await retrieveTitle(url)
+    const res = await retrieveTitle(url)
     let newCard: CARD
     newCard = {
         id: newCardId,
         text: res,
-        url: url,
+        url,
     }
     await setCards({
         ...cards,
         [newCard.id]: newCard,
     })
     // Update column
-    let newColumn = columns[columnId]
+    const newColumn = columns[columnId]
     newColumn.cardIds.push(newCardId)
     await setColumns({
         ...columns,
         [newColumn.id]: newColumn,
     })
-    return
 }
 
 export default handleCreateCard
