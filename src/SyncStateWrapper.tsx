@@ -61,48 +61,51 @@ export class SyncStateWrapper extends React.Component<
     });
   };
 
-  createCardHandler = (options: OPTIONS, cardMutexRef: any) => (
-    columnId: string
-  ) => async (url: string) => {
-    const release = await cardMutexRef.current.acquire();
-    try {
-      await handleCreateCard(
-        columnId,
-        url,
-        this.state.cards,
-        this.state.columns,
-        options,
-        this.setCards,
-        this.setColumns
-      );
-    } finally {
-      release();
-    }
-  };
+  createCardHandler =
+    (options: OPTIONS, cardMutexRef: any) =>
+    (columnId: string) =>
+    async (url: string) => {
+      const release = await cardMutexRef.current.acquire();
+      try {
+        await handleCreateCard(
+          columnId,
+          url,
+          this.state.cards,
+          this.state.columns,
+          options,
+          this.setCards,
+          this.setColumns
+        );
+      } finally {
+        release();
+      }
+    };
 
-  createColumnHandler = (
-    options: OPTIONS,
-    columnMutexRef: any,
-    setColumnOrder: (columnOrder: Array<string>) => any
-  ) => async (title: string, imports: string) => {
-    const release = await columnMutexRef.current.acquire();
-    try {
-      await handleCreateColumn(
-        title,
-        imports,
-        this.state.cards,
-        this.state.columns,
-        this.state.columnOrder,
-        this.state.collapsedOrder,
-        options,
-        this.setCards,
-        this.setColumns,
-        this.setColumnOrder
-      );
-    } finally {
-      release();
-    }
-  };
+  createColumnHandler =
+    (
+      options: OPTIONS,
+      columnMutexRef: any,
+      setColumnOrder: (columnOrder: Array<string>) => any
+    ) =>
+    async (title: string, imports: string) => {
+      const release = await columnMutexRef.current.acquire();
+      try {
+        await handleCreateColumn(
+          title,
+          imports,
+          this.state.cards,
+          this.state.columns,
+          this.state.columnOrder,
+          this.state.collapsedOrder,
+          options,
+          this.setCards,
+          this.setColumns,
+          this.setColumnOrder
+        );
+      } finally {
+        release();
+      }
+    };
 
   removeCardHandler = (columnId: string) => (cardId: string) => {
     handleRemoveCard(

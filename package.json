@@ -6,7 +6,9 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "depcheck": "npx depcheck .",
+    "lint": "prettier -l ./src && eslint ./src/**/*.{ts,tsx}"
   },
   "browserslist": {
     "production": [
