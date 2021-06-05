@@ -1,14 +1,14 @@
-import React from "react";
-import { ToastContainer, ToastContainerProps } from "react-toastify";
-import "./WrappedToastContainer.css";
+import React from 'react'
+import { ToastContainer, ToastContainerProps } from 'react-toastify'
+import './WrappedToastContainer.css'
 
 const WrappedToastContainer = ({
-  className,
-  ...rest
+    className,
+    ...rest
 }: ToastContainerProps & { className?: string }) => (
-  <div className={className}>
-    <ToastContainer {...rest} />
-  </div>
-);
+    <div className={className}>
+        <ToastContainer {...rest} />
+    </div>
+)
 
-export default WrappedToastContainer;
+export default WrappedToastContainer
