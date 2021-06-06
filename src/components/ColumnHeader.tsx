@@ -119,7 +119,7 @@ const ColumnHeader: React.VFC<{
                 )}
                 <div className="h-4 w-4 relative dropdown-wrapper">
                     <HiOutlineDotsVertical />
-                    <div className="flex flex-col dropdown-container transition-all duration-150 absolute top-4 right-0 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                    <div className="z-10 flex flex-col dropdown-container transition-all duration-150 absolute top-4 right-0 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                         {collapse ? (
                             <button
                                 type="button"

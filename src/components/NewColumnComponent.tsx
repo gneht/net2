@@ -23,7 +23,7 @@ const NewColumnComponent: React.VFC<{
                     setShowDropdown(!showDropdown)
                 }}
             >
-                + Add Column
+                {showDropdown ? 'Cancel' : '+ Add column'}
             </button>
             <div
                 className={`add-column-dropdown border border-gray-200 rounded-lg shadow ${

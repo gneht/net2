@@ -34,7 +34,7 @@ const CollapsedColumns: React.VFC<{
     } = props
     return (
         <div className="m-4">
-            <div className="py-4 px-24 font-medium">Collapsed Columns</div>
+            <div className="py-4 px-24 font-medium">Collapsed columns</div>
             <Droppable
                 droppableId="collapsed-columns"
                 direction="vertical"
