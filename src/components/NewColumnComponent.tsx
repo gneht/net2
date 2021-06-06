@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import { useMain } from '../context/main'
 
-import './NewColumnComponent.css'
-
 const NewColumnComponent: React.VFC<{
     createColumnHandler: (title: string, imports: string) => any
 }> = (props) => {
@@ -14,12 +12,24 @@ const NewColumnComponent: React.VFC<{
 
     const [showImports, setShowImports] = useState<boolean>(false)
 
+    const [showDropdown, setShowDropdown] = useState(false)
+
     return (
-        <div className="add-column w-80 flex-none m-4 rounded-lg shadow-md ring-1 ring-black ring-opacity-10 bg-white-50">
-            <div className="p-4 add-column-heading text-gray-600 font-medium">
+        <div className="add-column w-80 flex-none m-4 rounded-lg">
+            <button
+                type="button"
+                className="p-4 w-full hover:bg-gray-100 rounded-lg text-gray-600 font-medium"
+                onClick={() => {
+                    setShowDropdown(!showDropdown)
+                }}
+            >
                 + Add Column
-            </div>
-            <div className="add-column-dropdown">
+            </button>
+            <div
+                className={`add-column-dropdown border border-gray-200 rounded-lg shadow ${
+                    showDropdown ? 'visible' : 'invisible'
+                }`}
+            >
                 <form
                     className="p-4"
                     onSubmit={(e) => {
@@ -34,7 +44,7 @@ const NewColumnComponent: React.VFC<{
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         className="p-1 w-full border-b-2 focus:outline-none focus:border-gray-500 bg-gray-50"
-                        placeholder="Column Title"
+                        placeholder="Column title"
                     />
                     <div className="flex flex-col items-end mt-2">
                         <button

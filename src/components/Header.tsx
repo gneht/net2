@@ -4,12 +4,12 @@ import { useMain } from '../context/main'
 import handleGenerateLink from '../handlers/handleGenerateLink'
 import toastGenerateLink from './toasts/toastGenerateLink'
 
-const Header = (props: {
+const Header: React.VFC<{
     selected: Array<string>
     showSelection: boolean
     setSelected: (selected: Array<string>) => any
     setShowSelection: (showSelection: boolean) => any
-}) => {
+}> = (props) => {
     const { selected, showSelection, setSelected, setShowSelection } = props
 
     const { cards, columns, columnOrder, options, setOptions } = useMain()
@@ -19,7 +19,7 @@ const Header = (props: {
         <div className="fixed h-1/5 flex items-end w-screen z-10 justify-center ">
             <div className="flex justify-between items-center w-4/5 md:w-3/5 md:justify-start md:space-x-10">
                 <div className="flex justify-start lg:w-0 lg:flex-1">
-                    <h1 className="text-xl font-medium text-gray-600">
+                    <h1 className="text-4xl font-medium text-black">
                         Net{' '}
                         <span
                             role="img"
