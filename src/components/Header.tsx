@@ -4,6 +4,9 @@ import { useMain } from '../context/main'
 import handleGenerateLink from '../handlers/handleGenerateLink'
 import toastGenerateLink from './toasts/toastGenerateLink'
 
+import { HiOutlineCursorClick } from 'react-icons/hi'
+import { IoMdSettings } from 'react-icons/io'
+
 const Header: React.VFC<{
     selected: Array<string>
     showSelection: boolean
@@ -90,20 +93,7 @@ const Header: React.VFC<{
                                 >
                                     Select
                                     <div className="w-6 h-6">
-                                        {/* SELECT ICON */}
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M8 9l4-4 4 4m0 6l-4 4-4-4"
-                                            />
-                                        </svg>
+                                        <HiOutlineCursorClick />
                                     </div>
                                 </button>
                             )}
@@ -182,22 +172,7 @@ const Header: React.VFC<{
                                     onClick={() => setShowSelection(true)}
                                 >
                                     Select
-                                    <div className="w-6 h-6">
-                                        {/* SELECT */}
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M8 9l4-4 4 4m0 6l-4 4-4-4"
-                                            />
-                                        </svg>
-                                    </div>
+                                    <HiOutlineCursorClick className="ml-1 text-xl" />
                                 </button>
                             )}
                         </div>
@@ -209,22 +184,8 @@ const Header: React.VFC<{
                                 type="button"
                                 className="group px-4 py-2 bg-white rounded-md text-gray-500 inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                             >
-                                Options{' '}
-                                <div className="w-6 h-6">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                                        />
-                                    </svg>
-                                </div>
+                                Options
+                                <IoMdSettings className="ml-1 text-xl" />
                             </button>
                             <div className="flex flex-col dropdown-container transition-all duration-150 absolute  right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                                 <div className="block inline-flex space-x-2 items-baseline px-4 py-2 ">
