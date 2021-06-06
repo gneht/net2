@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import SyncStateWrapper from './SyncStateWrapper'
+import { SyncStateWrapper } from './SyncStateWrapper'
 import reportWebVitals from './reportWebVitals'
 
 ReactDOM.render(

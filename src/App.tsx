@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { Mutex } from 'async-mutex'
 
@@ -26,7 +26,7 @@ import emptyState from './assets/undraw_blank_canvas_3rbb.svg'
 
 import { CARDS, COLUMNS, OPTIONS } from './types'
 
-const App = (props: {
+const App: React.VFC<{
     cards: CARDS
     columns: COLUMNS
     columnOrder: Array<string>
@@ -43,7 +43,7 @@ const App = (props: {
     ) => any
     removeCardHandler: (columnId: string) => any
     removeColumnHandler: (columnId: string) => any
-}) => {
+}> = (props) => {
     const {
         cards,
         columns,
@@ -75,7 +75,7 @@ const App = (props: {
     const [selected, setSelected] = useState<Array<string>>([])
 
     /* For first load and updates from extension */
-    const loadBoard = () => {
+    const loadBoard = useCallback(() => {
         const storedCards = localStorage.getItem('cards')
         const storedColumns = localStorage.getItem('columns')
         const storedColumnOrder = localStorage.getItem('columnOrder')
@@ -100,7 +100,7 @@ const App = (props: {
             const parsedOptions = JSON.parse(storedOptions)
             setOptions(parsedOptions)
         }
-    }
+    }, [setCards, setCollapsedOrder, setColumnOrder, setColumns])
 
     useEffect(() => {
         loadBoard()
@@ -108,10 +108,10 @@ const App = (props: {
         window.onstorage = () => {
             loadBoard()
         }
-    }, [])
+    }, [loadBoard])
 
     useEffect(() => {
-        var root = document.documentElement
+        const root = document.documentElement
         if (snap) {
             root.className += ' snapWrapTrue'
             root.classList.remove('snapWrapFalse')
@@ -220,7 +220,7 @@ const App = (props: {
                     setSelected={setSelected}
                     showSelection={showSelection}
                     setShowSelection={setShowSelection}
-                ></Header>
+                />
                 <div
                     style={{ position: 'absolute', top: '20%' }}
                     className="h-4/5"
@@ -336,11 +336,10 @@ const App = (props: {
                                                             setShowSelection={
                                                                 setShowSelection
                                                             }
-                                                        ></Column>
+                                                        />
                                                     )
-                                                } else {
-                                                    return <></>
                                                 }
+                                                return <></>
                                             })}
                                         {provided.placeholder}
                                         {options.showCollapsed ? (

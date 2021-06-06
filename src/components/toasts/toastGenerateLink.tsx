@@ -7,6 +7,7 @@ const toastGenerateLink = (link: string) => {
         return (
             <div className="p-4 inline-flex space-x-3">
                 <button
+                    type="button"
                     className={`rounded-md hover:"text-green-900" focus:ring-2 focus:ring-offset-2 focus:outline-none`}
                     onClick={() => {
                         navigator.clipboard.writeText(link)

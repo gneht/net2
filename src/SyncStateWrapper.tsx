@@ -11,7 +11,7 @@ import toastRemoveColumn from './components/toasts/toastRemoveColumn'
 import { CARDS, COLUMNS, OPTIONS } from './types'
 
 export class SyncStateWrapper extends React.Component<
-    {},
+    Record<string, unknown>,
     {
         cards: CARDS
         columns: COLUMNS
@@ -19,7 +19,7 @@ export class SyncStateWrapper extends React.Component<
         collapsedOrder: Array<string>
     }
 > {
-    constructor(props: {}) {
+    constructor(props: Record<string, unknown>) {
         super(props)
         this.state = {
             cards: {},
@@ -152,5 +152,3 @@ export class SyncStateWrapper extends React.Component<
         )
     }
 }
-
-export default SyncStateWrapper
