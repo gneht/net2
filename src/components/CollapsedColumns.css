@@ -1,18 +1,18 @@
 #scrollCC::-webkit-scrollbar {
-  width: 8px;
+    width: 8px;
 }
 
 #scrollCC::-webkit-scrollbar-track {
-  transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease;
 
-  background: white;
-  border-radius: 5px;
+    background: white;
+    border-radius: 5px;
 }
 
 #scrollCC::-webkit-scrollbar-thumb {
-  transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease;
 
-  --tw-bg-opacity: 1;
-  background: rgba(229, 231, 235, var(--tw-bg-opacity));
-  border-radius: 4px;
+    --tw-bg-opacity: 1;
+    background: rgba(229, 231, 235, var(--tw-bg-opacity));
+    border-radius: 4px;
 }

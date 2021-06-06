@@ -1,13 +1,8 @@
-import retrieveTitle from "./retrieveTitle";
+import retrieveTitle from './retrieveTitle'
 
 const retrieveTitles = async (urls: Array<string>) => {
-  let title;
-  let titles = [];
-  for (const url of urls) {
-    title = await retrieveTitle(url);
-    titles.unshift(title);
-  }
-  return titles;
-};
+    const titles = Promise.all(urls.map((url) => retrieveTitle(url)))
+    return titles
+}
 
-export default retrieveTitles;
+export default retrieveTitles

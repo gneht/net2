@@ -1,17 +1,17 @@
-import { CARDS } from "../types";
+import { CARDS } from '../types'
 
 const retrieveCardId = async (cards: CARDS) => {
-  let t = 0;
-  let cardId;
+    let t = 0
+    let cardId
 
-  while (true) {
-    cardId = "t" + t;
-    t++;
-    if (!cards.hasOwnProperty(cardId)) {
-      break;
+    while (true) {
+        cardId = `t${t}`
+        t++
+        if (!cards.hasOwnProperty(cardId)) {
+            break
+        }
     }
-  }
-  return cardId;
-};
+    return cardId
+}
 
-export default retrieveCardId;
+export default retrieveCardId

@@ -1,21 +1,20 @@
-import { COLUMNS } from "../types";
+import { COLUMNS } from '../types'
 
 const handleUpdateColumn = async (
-  columnId: string,
-  title: string,
-  columns: COLUMNS,
-  setColumns: (columns: COLUMNS) => any
+    columnId: string,
+    title: string,
+    columns: COLUMNS,
+    setColumns: (columns: COLUMNS) => any
 ) => {
-  const newColumn = {
-    ...columns[columnId],
-    title: title,
-  };
+    const newColumn = {
+        ...columns[columnId],
+        title,
+    }
 
-  await setColumns({
-    ...columns,
-    [columnId]: newColumn,
-  });
-  return;
-};
+    await setColumns({
+        ...columns,
+        [columnId]: newColumn,
+    })
+}
 
-export default handleUpdateColumn;
+export default handleUpdateColumn
