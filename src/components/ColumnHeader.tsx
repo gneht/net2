@@ -8,7 +8,7 @@ import { BiExpand } from 'react-icons/bi'
 import { BsArrowsCollapse } from 'react-icons/bs'
 import { RiExternalLinkLine, RiDeleteBack2Line } from 'react-icons/ri'
 import { IoMdCopy } from 'react-icons/io'
-import { HiOutlineLink } from 'react-icons/hi'
+import { HiOutlineLink, HiOutlineDotsVertical } from 'react-icons/hi'
 
 const ColumnHeader: React.VFC<{
     column: COLUMN
@@ -72,7 +72,7 @@ const ColumnHeader: React.VFC<{
 
     return (
         <div
-            className="p-4 flex justify-between space-x-2"
+            className="p-4 flex justify-between items-center space-x-2"
             {...dragHandleProps}
         >
             {showSelection && (
@@ -109,31 +109,16 @@ const ColumnHeader: React.VFC<{
             </div>
 
             <div className="flex items-baseline space-x-1">
-                {showCardCount ? (
+                {showCardCount && (
                     <div className="whitespace-nowrap text-sm text-gray-500 ">
                         <p>
                             {column.cardIds.length} link
                             {column.cardIds.length === 1 ? '' : 's'}
                         </p>
                     </div>
-                ) : (
-                    <></>
                 )}
                 <div className="h-4 w-4 relative dropdown-wrapper">
-                    <svg
-                        className="h-4 w-4"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                        />
-                    </svg>
+                    <HiOutlineDotsVertical />
                     <div className="flex flex-col dropdown-container transition-all duration-150 absolute top-4 right-0 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                         {collapse ? (
                             <button

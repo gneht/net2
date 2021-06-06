@@ -311,7 +311,7 @@ const Header: React.VFC<{
                     </div>
                     <div className="py-6 px-5 space-y-6">
                         <div className="flex flex-col gap-y-4">
-                            <div className="block inline-flex items-baseline space-x-2">
+                            <div className="block flex items-center space-x-2">
                                 <input
                                     type="checkbox"
                                     checked={options.markdownLinks || false}
@@ -325,7 +325,7 @@ const Header: React.VFC<{
                                 />
                                 <label>Markdown mode </label>
                             </div>
-                            <div className="block inline-flex items-baseline space-x-2">
+                            <div className="block flex items-center space-x-2">
                                 <input
                                     type="checkbox"
                                     checked={options.openOnLaunch || false}
@@ -338,7 +338,7 @@ const Header: React.VFC<{
                                 />
                                 <label>Open On Launch </label>
                             </div>
-                            <div className="block inline-flex items-baseline space-x-2">
+                            <div className="block flex items-center space-x-2">
                                 <input
                                     type="checkbox"
                                     checked={options.showCollapsed || false}
