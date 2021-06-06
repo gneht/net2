@@ -16,9 +16,7 @@ const Card: React.VFC<{
             {(provided, snapshot) => (
                 <div
                     className={`${
-                        snapshot.isDragging
-                            ? 'bg-white'
-                            : `bg-${options.theme}-50`
+                        snapshot.isDragging ? 'bg-white' : `bg-gray-100`
                     } p-4 rounded-md shadow-md ring-1 ring-black ring-opacity-5 flex justify-between space-x-4`}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
@@ -53,7 +51,7 @@ const Card: React.VFC<{
                         <div className="flex flex-col dropdown-container transition-all duration 150 absolute top-4 right-0 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                             <button
                                 type="button"
-                                className={`block px-4 py-2 inline-flex justify-evenly text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
+                                className="block px-4 py-2 inline-flex justify-evenly text-sm text-gray-700 hover:bg-white hover:text-gray-900"
                                 onClick={() =>
                                     navigator.clipboard.writeText(card.url)
                                 }

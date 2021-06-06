@@ -82,7 +82,7 @@ const Column: React.VFC<{
                                     /* This doesn't actually do anything atm. What design do I want? */
                                     className={`${
                                         snapshot.isDraggingOver
-                                            ? `bg-${options.theme}-100`
+                                            ? `bg-gray-100`
                                             : ''
                                     } p-4 space-y-4 transition max-h-80 overflow-y-auto shadow-inner`}
                                     ref={droppableProvided.innerRef}

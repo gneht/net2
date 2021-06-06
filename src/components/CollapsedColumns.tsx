@@ -34,9 +34,7 @@ const CollapsedColumns: React.VFC<{
     } = props
     return (
         <div className="m-4">
-            <div
-                className={`py-4 px-24 mb-4 shadow-md rounded-md ring-1 ring-black ring-opacity-5 bg-white text-gray-600 font-medium bg-${options.theme}-50`}
-            >
+            <div className="py-4 px-24 mb-4 shadow-md rounded-md ring-1 ring-black ring-opacity-5 bg-white text-gray-600 font-medium bg-white">
                 Collapsed Columns
             </div>
             <Droppable
@@ -115,8 +113,8 @@ const CollapsedColumns: React.VFC<{
                                                             <div
                                                                 className={`${
                                                                     snapshot.isDraggingOver
-                                                                        ? `bg-${options.theme}-100`
-                                                                        : `bg-${options.theme}-50`
+                                                                        ? `bg-gray-100`
+                                                                        : `bg-gray-50`
                                                                 } p-1 transition`}
                                                                 ref={
                                                                     droppableProvided.innerRef

@@ -26,7 +26,6 @@ export const MainContext = createContext<ContextProps>({
         markdownLinks: false,
         openOnLaunch: true,
         showCollapsed: true,
-        theme: 'gray',
     },
     cardMutexRef: null,
     columnMutexRef: null,

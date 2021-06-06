@@ -132,7 +132,7 @@ const ColumnHeader: React.VFC<{
                         {collapse ? (
                             <button
                                 type="button"
-                                className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
+                                className="block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                                 onClick={() => collapseHandler(collapse)}
                             >
                                 <div className="flex-initial w-4 h-4">
@@ -155,7 +155,7 @@ const ColumnHeader: React.VFC<{
                         ) : (
                             <button
                                 type="button"
-                                className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
+                                className="block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                                 onClick={() => collapseHandler(collapse)}
                             >
                                 <div className="flex-initial w-4 h-4">
@@ -178,7 +178,7 @@ const ColumnHeader: React.VFC<{
                         )}
                         <button
                             type="button"
-                            className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
+                            className="block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                             onClick={() => openAllCardsHandler(column.id)}
                         >
                             <div className="flex-initial w-4 h-4">
@@ -200,7 +200,7 @@ const ColumnHeader: React.VFC<{
                         </button>
                         <button
                             type="button"
-                            className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
+                            className="block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                             onClick={() => clipboardHandler(column.id)}
                         >
                             <div className="flex-initial w-4 h-4">
@@ -225,7 +225,7 @@ const ColumnHeader: React.VFC<{
                         ) : (
                             <button
                                 type="button"
-                                className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
+                                className="block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                                 onClick={() => {
                                     selectionHandler(column.id)
                                     setShowSelection(true)
