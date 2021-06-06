@@ -113,7 +113,7 @@ const CollapsedColumns: React.VFC<{
                                                                     snapshot.isDraggingOver
                                                                         ? `bg-gray-100`
                                                                         : `bg-gray-50`
-                                                                } p-1 transition`}
+                                                                } transition`}
                                                                 ref={
                                                                     droppableProvided.innerRef
                                                                 }
