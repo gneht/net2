@@ -16,8 +16,8 @@ const Card: React.VFC<{
             {(provided, snapshot) => (
                 <div
                     className={`${
-                        snapshot.isDragging ? 'bg-white' : `bg-gray-100`
-                    } p-4 rounded-md shadow-md ring-1 ring-black ring-opacity-5 flex justify-between space-x-4`}
+                        snapshot.isDragging && 'ring-blue-500 ring-opacity-50'
+                    } p-4 rounded-md shadow-md ring-2 bg-white ring-black ring-opacity-5 flex justify-between space-x-4`}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
