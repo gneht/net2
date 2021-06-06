@@ -239,7 +239,7 @@ const Header = (props: {
                                             })
                                         }}
                                     />
-                                    <label className="text-sm text-gray-700 whitespace-nowrap	">
+                                    <label className="text-sm text-gray-700 whitespace-nowrap">
                                         Markdown Mode
                                     </label>
                                 </div>

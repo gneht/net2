@@ -8,7 +8,7 @@ import './Column.css'
 
 import { CARD, COLUMN, OPTIONS } from '../types'
 
-const Column = (props: {
+const Column: React.VFC<{
     column: COLUMN
     cards: Array<CARD>
     index: number
@@ -27,7 +27,7 @@ const Column = (props: {
     openAllCardsHandler: (columnId: string) => any
     collapseHandler: (collapse: boolean) => any
     selectionHandler: (columnId: string) => any
-}) => {
+}> = (props) => {
     const {
         column,
         cards,
@@ -76,7 +76,7 @@ const Column = (props: {
                         />
 
                         <Droppable droppableId={column.id} type="card">
-                            {(provided, snapshot) => (
+                            {(droppableProvided, snapshot) => (
                                 <div
                                     id="scrollDiv"
                                     /* This doesn't actually do anything atm. What design do I want? */
@@ -85,8 +85,8 @@ const Column = (props: {
                                             ? `bg-${options.theme}-100`
                                             : ''
                                     } p-4 space-y-4 transition max-h-80 overflow-y-auto shadow-inner`}
-                                    ref={provided.innerRef}
-                                    {...provided.droppableProps}
+                                    ref={droppableProvided.innerRef}
+                                    {...droppableProvided.droppableProps}
                                 >
                                     {cards.length === 0 &&
                                     !snapshot.isDraggingOver ? (
@@ -98,18 +98,18 @@ const Column = (props: {
                                             />{' '}
                                         </div>
                                     ) : (
-                                        cards.map((c, index) => (
+                                        cards.map((c, cardIndex) => (
                                             <Card
                                                 key={c.id}
                                                 card={c}
-                                                index={index}
+                                                index={cardIndex}
                                                 removeCardHandler={
                                                     removeCardHandler
                                                 }
                                             />
                                         ))
                                     )}
-                                    {provided.placeholder}
+                                    {droppableProvided.placeholder}
                                 </div>
                             )}
                         </Droppable>

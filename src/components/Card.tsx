@@ -3,11 +3,11 @@ import { CARD } from '../types'
 
 import { useMain } from '../context/main'
 
-const Card = (props: {
+const Card: React.VFC<{
     card: CARD
     index: number
     removeCardHandler: (cardId: string) => any
-}) => {
+}> = (props) => {
     const { options } = useMain()
     const { card, index, removeCardHandler } = props
 
@@ -52,6 +52,7 @@ const Card = (props: {
                         </svg>
                         <div className="flex flex-col dropdown-container transition-all duration 150 absolute top-4 right-0 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                             <button
+                                type="button"
                                 className={`block px-4 py-2 inline-flex justify-evenly text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
                                 onClick={() =>
                                     navigator.clipboard.writeText(card.url)
@@ -75,6 +76,7 @@ const Card = (props: {
                                 <p className="flex-initial">Copy</p>
                             </button>
                             <button
+                                type="button"
                                 className="block px-4 py-2 inline-flex justify-evenly text-sm bg-red-50 text-red-700 hover:bg-red-100 hover:text-red-900"
                                 onClick={() => removeCardHandler(card.id)}
                             >

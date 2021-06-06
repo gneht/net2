@@ -13,10 +13,12 @@ const handleGenerateLink: (
     let currentColumn: COLUMN
     let currentCard: CARD
     for (let c = 0; c < columnIds.length; c++) {
-        if ((currentColumn = columns[columnIds[c]])) {
+        if (columns[columnIds[c]]) {
+            currentColumn = columns[columnIds[c]]
             generatedColumns[columnIds[c]] = currentColumn
             for (let t = 0; t < currentColumn.cardIds.length; t++) {
-                if ((currentCard = cards[currentColumn.cardIds[t]])) {
+                if (cards[currentColumn.cardIds[t]]) {
+                    currentCard = cards[currentColumn.cardIds[t]]
                     generatedCards[currentColumn.cardIds[t]] = currentCard
                 } else {
                     // ERROR: CARD MUST EXIST

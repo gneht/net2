@@ -4,7 +4,7 @@ import { useMain } from '../context/main'
 import { COLUMN } from '../types'
 import './ColumnHeader.css'
 
-const ColumnHeader = (props: {
+const ColumnHeader: React.VFC<{
     column: COLUMN
     removeColumnHandler: (columnId: string) => any
     clipboardHandler: (columnId: string) => any
@@ -18,7 +18,7 @@ const ColumnHeader = (props: {
     selectionHandler: (columnId: string) => any
     dragHandleProps: any
     showCardCount?: boolean
-}) => {
+}> = (props) => {
     const { options } = useMain()
 
     const {
@@ -82,7 +82,9 @@ const ColumnHeader = (props: {
             )}
             <div className="relative">
                 {showTarget && (
-                    <div
+                    <button
+                        type="button"
+                        aria-label="Button"
                         className="absolute inset-0 cursor-pointer"
                         onClick={onTargetClick}
                     />
@@ -129,6 +131,7 @@ const ColumnHeader = (props: {
                     <div className="flex flex-col dropdown-container transition-all duration-150 absolute top-4 right-0 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                         {collapse ? (
                             <button
+                                type="button"
                                 className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
                                 onClick={() => collapseHandler(collapse)}
                             >
@@ -151,6 +154,7 @@ const ColumnHeader = (props: {
                             </button>
                         ) : (
                             <button
+                                type="button"
                                 className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
                                 onClick={() => collapseHandler(collapse)}
                             >
@@ -173,6 +177,7 @@ const ColumnHeader = (props: {
                             </button>
                         )}
                         <button
+                            type="button"
                             className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
                             onClick={() => openAllCardsHandler(column.id)}
                         >
@@ -194,6 +199,7 @@ const ColumnHeader = (props: {
                             <p>Open</p>
                         </button>
                         <button
+                            type="button"
                             className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
                             onClick={() => clipboardHandler(column.id)}
                         >
@@ -218,6 +224,7 @@ const ColumnHeader = (props: {
                             <></>
                         ) : (
                             <button
+                                type="button"
                                 className={`block inline-flex justify-evenly px-4 py-2 text-sm text-gray-700 hover:bg-${options.theme}-100 hover:text-gray-900`}
                                 onClick={() => {
                                     selectionHandler(column.id)
@@ -244,6 +251,7 @@ const ColumnHeader = (props: {
                         )}
 
                         <button
+                            type="button"
                             className="block px-4 py-2 inline-flex justify-evenly text-sm bg-red-50 text-red-700 hover:bg-red-100 hover:text-red-900"
                             onClick={() => removeColumnHandler(column.id)}
                         >

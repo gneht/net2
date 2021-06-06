@@ -1,3 +1,4 @@
+import React from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 import ColumnHeader from './ColumnHeader'
 import { COLUMNS } from '../types'
@@ -6,7 +7,7 @@ import { useMain } from '../context/main'
 
 import './CollapsedColumns.css'
 
-const CollapsedColumns = (props: {
+const CollapsedColumns: React.VFC<{
     columns: COLUMNS
     collapsedOrder: Array<string>
     selected: Array<string>
@@ -17,7 +18,7 @@ const CollapsedColumns = (props: {
     clipboardHandler: (columnId: string) => any
     collapseHandler: (columnId: string) => any
     selectionHandler: (columnId: string) => any
-}) => {
+}> = (props) => {
     const { options } = useMain()
     const {
         columns,
@@ -62,10 +63,10 @@ const CollapsedColumns = (props: {
                                         draggableId={column.id}
                                         index={index}
                                     >
-                                        {(provided) => (
+                                        {(providedDraggable) => (
                                             <div
-                                                {...provided.draggableProps}
-                                                ref={provided.innerRef}
+                                                {...providedDraggable.draggableProps}
+                                                ref={providedDraggable.innerRef}
                                             >
                                                 <div className="flex-none my-2 mx-2 w-80 rounded-md shadow-md ring-1 ring-black ring-opacity-5 bg-white">
                                                     {/* This, including the line above, is the orignal drag/drop */}
@@ -88,7 +89,7 @@ const CollapsedColumns = (props: {
                                                             column.id
                                                         )}
                                                         dragHandleProps={
-                                                            provided.dragHandleProps
+                                                            providedDraggable.dragHandleProps
                                                         }
                                                         showSelection={false}
                                                         selected={selected.includes(
@@ -108,7 +109,7 @@ const CollapsedColumns = (props: {
                                                         type="card"
                                                     >
                                                         {(
-                                                            provided,
+                                                            droppableProvided,
                                                             snapshot
                                                         ) => (
                                                             <div
@@ -118,12 +119,12 @@ const CollapsedColumns = (props: {
                                                                         : `bg-${options.theme}-50`
                                                                 } p-1 transition`}
                                                                 ref={
-                                                                    provided.innerRef
+                                                                    droppableProvided.innerRef
                                                                 }
-                                                                {...provided.droppableProps}
+                                                                {...droppableProvided.droppableProps}
                                                             >
                                                                 {
-                                                                    provided.placeholder
+                                                                    droppableProvided.placeholder
                                                                 }
                                                             </div>
                                                         )}

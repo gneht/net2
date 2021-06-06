@@ -46,8 +46,7 @@ const handleCreateCard = async (
 
     // SELF HOSTING SHOULD SPEED THIS UP (BUT BY HOW MUCH?)
     const res = await retrieveTitle(url)
-    let newCard: CARD
-    newCard = {
+    const newCard = {
         id: newCardId,
         text: res,
         url,

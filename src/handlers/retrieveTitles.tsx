@@ -1,12 +1,7 @@
 import retrieveTitle from './retrieveTitle'
 
 const retrieveTitles = async (urls: Array<string>) => {
-    let title
-    const titles = []
-    for (const url of urls) {
-        title = await retrieveTitle(url)
-        titles.unshift(title)
-    }
+    const titles = Promise.all(urls.map((url) => retrieveTitle(url)))
     return titles
 }
 
