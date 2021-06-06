@@ -51,7 +51,7 @@ const Column: React.VFC<{
 
     return (
         <Draggable draggableId={column.id} index={index}>
-            {(provided) => (
+            {(provided, containerProvided) => (
                 <div
                     className={`rounded-lg ${
                         selected ? 'bg-blue-100' : 'bg-none'
@@ -59,7 +59,12 @@ const Column: React.VFC<{
                     {...provided.draggableProps}
                     ref={provided.innerRef}
                 >
-                    <div className="w-80 flex-none m-4 rounded-md shadow-md ring-1 ring-black ring-opacity-5 bg-white">
+                    <div
+                        className={`${
+                            containerProvided.isDragging &&
+                            'ring-blue-500 ring-opacity-50'
+                        } w-80 flex-none m-4 rounded-md shadow-md ring-2 ring-black ring-opacity-5 bg-white`}
+                    >
                         <ColumnHeader
                             column={column}
                             removeColumnHandler={removeColumnHandler}
@@ -81,9 +86,7 @@ const Column: React.VFC<{
                                     id="scrollDiv"
                                     /* This doesn't actually do anything atm. What design do I want? */
                                     className={`${
-                                        snapshot.isDraggingOver
-                                            ? `bg-gray-100`
-                                            : ''
+                                        snapshot.isDraggingOver && `bg-gray-100`
                                     } p-4 space-y-4 transition max-h-80 overflow-y-auto shadow-inner`}
                                     ref={droppableProvided.innerRef}
                                     {...droppableProvided.droppableProps}
