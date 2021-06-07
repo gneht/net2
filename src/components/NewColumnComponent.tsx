@@ -1,11 +1,9 @@
 import { useState } from 'react'
 import { useMain } from '../context/main'
 
-import './NewColumnComponent.css'
-
-const NewColumnComponent = (props: {
+const NewColumnComponent: React.VFC<{
     createColumnHandler: (title: string, imports: string) => any
-}) => {
+}> = (props) => {
     const { createColumnHandler } = props
     const { options } = useMain()
 
@@ -14,14 +12,24 @@ const NewColumnComponent = (props: {
 
     const [showImports, setShowImports] = useState<boolean>(false)
 
+    const [showDropdown, setShowDropdown] = useState(false)
+
     return (
-        <div
-            className={`add-column w-80 flex-none m-4 rounded-md shadow-md ring-1 ring-black ring-opacity-5 bg-${options.theme}-50`}
-        >
-            <div className="p-4 add-column-heading text-gray-600 font-medium">
-                + Add Column
-            </div>
-            <div className="add-column-dropdown">
+        <div className="add-column w-80 flex-none m-4 rounded-lg">
+            <button
+                type="button"
+                className="p-4 w-full hover:bg-gray-100 rounded-lg text-gray-600 font-medium"
+                onClick={() => {
+                    setShowDropdown(!showDropdown)
+                }}
+            >
+                {showDropdown ? 'Cancel' : '+ Add column'}
+            </button>
+            <div
+                className={`add-column-dropdown border border-gray-200 rounded-lg shadow ${
+                    showDropdown ? 'visible' : 'invisible'
+                }`}
+            >
                 <form
                     className="p-4"
                     onSubmit={(e) => {
@@ -35,8 +43,8 @@ const NewColumnComponent = (props: {
                     <input
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className={`p-1 w-full border-b-2 focus:outline-none focus:border-gray-500 bg-${options.theme}-50`}
-                        placeholder="Column Title"
+                        className="p-1 w-full border-b-2 focus:outline-none focus:border-gray-500 bg-gray-50"
+                        placeholder="Column title"
                     />
                     <div className="flex flex-col items-end mt-2">
                         <button

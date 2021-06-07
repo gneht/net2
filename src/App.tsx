@@ -66,7 +66,6 @@ const App: React.VFC<{
         markdownLinks: false,
         openOnLaunch: true,
         showCollapsed: true,
-        theme: 'gray',
     })
 
     const [snap, setSnap] = useState<boolean>(true)
@@ -255,9 +254,7 @@ const App: React.VFC<{
                                             )}
                                         />
                                         {columnOrder.length === 0 ? (
-                                            <div
-                                                className={`w-80 h-96 flex flex-col justify-evenly items-center space-y-6 flex-none m-4 rounded-md shadow-md ring-1 ring-black ring-opacity-5 bg-${options.theme}-100`}
-                                            >
+                                            <div className="w-80 h-96 flex flex-col justify-evenly items-center space-y-6 flex-none m-4 rounded-md shadow-md ring-1 ring-black ring-opacity-5 bg-white">
                                                 <img
                                                     className="w-64 flex-initial"
                                                     src={emptyState}

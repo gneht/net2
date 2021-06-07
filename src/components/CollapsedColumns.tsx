@@ -34,11 +34,7 @@ const CollapsedColumns: React.VFC<{
     } = props
     return (
         <div className="m-4">
-            <div
-                className={`py-4 px-24 mb-4 shadow-md rounded-md ring-1 ring-black ring-opacity-5 bg-white text-gray-600 font-medium bg-${options.theme}-50`}
-            >
-                Collapsed Columns
-            </div>
+            <div className="py-4 px-24 font-medium">Collapsed columns</div>
             <Droppable
                 droppableId="collapsed-columns"
                 direction="vertical"
@@ -47,7 +43,7 @@ const CollapsedColumns: React.VFC<{
                 {(provided) => (
                     <div
                         id="scrollCC"
-                        className="h-96 flex flex-col items-start overflow-y-auto max-h-96 shadow-inner ring-1 ring-black ring-opacity-5 bg-white"
+                        className="h-96 flex flex-col items-start overflow-y-auto max-h-96 shadow-inner rounded-lg ring-1 ring-black ring-opacity-5 bg-white"
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                     >
@@ -115,9 +111,9 @@ const CollapsedColumns: React.VFC<{
                                                             <div
                                                                 className={`${
                                                                     snapshot.isDraggingOver
-                                                                        ? `bg-${options.theme}-100`
-                                                                        : `bg-${options.theme}-50`
-                                                                } p-1 transition`}
+                                                                        ? `bg-gray-100`
+                                                                        : `bg-gray-50`
+                                                                } transition`}
                                                                 ref={
                                                                     droppableProvided.innerRef
                                                                 }

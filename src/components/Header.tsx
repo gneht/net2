@@ -4,12 +4,15 @@ import { useMain } from '../context/main'
 import handleGenerateLink from '../handlers/handleGenerateLink'
 import toastGenerateLink from './toasts/toastGenerateLink'
 
-const Header = (props: {
+import { HiOutlineCursorClick } from 'react-icons/hi'
+import { IoMdSettings } from 'react-icons/io'
+
+const Header: React.VFC<{
     selected: Array<string>
     showSelection: boolean
     setSelected: (selected: Array<string>) => any
     setShowSelection: (showSelection: boolean) => any
-}) => {
+}> = (props) => {
     const { selected, showSelection, setSelected, setShowSelection } = props
 
     const { cards, columns, columnOrder, options, setOptions } = useMain()
@@ -19,7 +22,7 @@ const Header = (props: {
         <div className="fixed h-1/5 flex items-end w-screen z-10 justify-center ">
             <div className="flex justify-between items-center w-4/5 md:w-3/5 md:justify-start md:space-x-10">
                 <div className="flex justify-start lg:w-0 lg:flex-1">
-                    <h1 className="text-xl font-medium text-gray-600">
+                    <h1 className="text-4xl font-medium text-black">
                         Net{' '}
                         <span
                             role="img"
@@ -90,20 +93,7 @@ const Header = (props: {
                                 >
                                     Select
                                     <div className="w-6 h-6">
-                                        {/* SELECT ICON */}
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M8 9l4-4 4 4m0 6l-4 4-4-4"
-                                            />
-                                        </svg>
+                                        <HiOutlineCursorClick />
                                     </div>
                                 </button>
                             )}
@@ -113,7 +103,7 @@ const Header = (props: {
                     {!showSelection && (
                         <button
                             type="button"
-                            className={`bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-${options.theme}-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500`}
+                            className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
                             onClick={() => {
                                 setMenuOpen(!menuOpen)
                             }}
@@ -182,22 +172,7 @@ const Header = (props: {
                                     onClick={() => setShowSelection(true)}
                                 >
                                     Select
-                                    <div className="w-6 h-6">
-                                        {/* SELECT */}
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M8 9l4-4 4 4m0 6l-4 4-4-4"
-                                            />
-                                        </svg>
-                                    </div>
+                                    <HiOutlineCursorClick className="ml-1 text-xl" />
                                 </button>
                             )}
                         </div>
@@ -209,22 +184,8 @@ const Header = (props: {
                                 type="button"
                                 className="group px-4 py-2 bg-white rounded-md text-gray-500 inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                             >
-                                Options{' '}
-                                <div className="w-6 h-6">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                                        />
-                                    </svg>
-                                </div>
+                                Options
+                                <IoMdSettings className="ml-1 text-xl" />
                             </button>
                             <div className="flex flex-col dropdown-container transition-all duration-150 absolute  right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                                 <div className="block inline-flex space-x-2 items-baseline px-4 py-2 ">
@@ -324,7 +285,7 @@ const Header = (props: {
                                 </span>
                                 <button
                                     type="button"
-                                    className={`bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-${options.theme}-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500`}
+                                    className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
                                     onClick={() => {
                                         setMenuOpen(!menuOpen)
                                     }}
@@ -350,7 +311,7 @@ const Header = (props: {
                     </div>
                     <div className="py-6 px-5 space-y-6">
                         <div className="flex flex-col gap-y-4">
-                            <div className="block inline-flex items-baseline space-x-2">
+                            <div className="block flex items-center space-x-2">
                                 <input
                                     type="checkbox"
                                     checked={options.markdownLinks || false}
@@ -364,7 +325,7 @@ const Header = (props: {
                                 />
                                 <label>Markdown mode </label>
                             </div>
-                            <div className="block inline-flex items-baseline space-x-2">
+                            <div className="block flex items-center space-x-2">
                                 <input
                                     type="checkbox"
                                     checked={options.openOnLaunch || false}
@@ -377,7 +338,7 @@ const Header = (props: {
                                 />
                                 <label>Open On Launch </label>
                             </div>
-                            <div className="block inline-flex items-baseline space-x-2">
+                            <div className="block flex items-center space-x-2">
                                 <input
                                     type="checkbox"
                                     checked={options.showCollapsed || false}

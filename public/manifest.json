@@ -1,15 +1,16 @@
 {
-  "name": "NetExtension",
-  "description": "Organize the web",
-  "version": "1.0.1",
-  "manifest_version": 2,
-  "permissions": ["activeTab", "tabs", "storage", "contextMenus"],
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
-  },
-  "icons": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" },
-  "options_page": "index.html",
-  "browser_action": {},
-  "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
+    "name": "NetExtension",
+    "description": "Organize the web",
+    "version": "1.0.1",
+    "manifest_version": 2,
+    "permissions": ["activeTab", "tabs", "storage", "contextMenus"],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+    "icons": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" },
+    "options_page": "index.html",
+    "options_ui": { "page": "index.html", "open_in_tab": true },
+    "browser_action": {},
+    "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
 }
