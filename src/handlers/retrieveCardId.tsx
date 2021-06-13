@@ -1,16 +1,13 @@
 import { CARDS } from '../types'
 
-const retrieveCardId = async (cards: CARDS) => {
+const retrieveCardId = async (cards: CARDS): Promise<string> => {
     let t = 0
     let cardId
 
-    while (true) {
+    do {
         cardId = `t${t}`
         t++
-        if (!cards.hasOwnProperty(cardId)) {
-            break
-        }
-    }
+    } while (!cards.hasOwnProperty(cardId))
     return cardId
 }
 

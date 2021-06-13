@@ -4,8 +4,8 @@ const handleUpdateColumn = async (
     columnId: string,
     title: string,
     columns: COLUMNS,
-    setColumns: (columns: COLUMNS) => any
-) => {
+    setColumns: (columns: COLUMNS) => Promise<null>
+): Promise<void> => {
     const newColumn = {
         ...columns[columnId],
         title,

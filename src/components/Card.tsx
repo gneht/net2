@@ -1,8 +1,6 @@
 import { Draggable } from 'react-beautiful-dnd'
 import { CARD } from '../types'
 
-import { useMain } from '../context/main'
-
 import { IoMdCopy } from 'react-icons/io'
 import { RiDeleteBack2Line } from 'react-icons/ri'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
@@ -10,9 +8,8 @@ import { HiOutlineDotsVertical } from 'react-icons/hi'
 const Card: React.VFC<{
     card: CARD
     index: number
-    removeCardHandler: (cardId: string) => any
+    removeCardHandler: (cardId: string) => void
 }> = (props) => {
-    const { options } = useMain()
     const { card, index, removeCardHandler } = props
 
     return (

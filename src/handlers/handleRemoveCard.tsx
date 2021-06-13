@@ -5,9 +5,9 @@ const handleRemoveCard = async (
     cardId: string,
     cards: CARDS,
     columns: COLUMNS,
-    setCards: (cards: CARDS) => any,
-    setColumns: (columns: COLUMNS) => any
-) => {
+    setCards: (cards: CARDS) => Promise<null>,
+    setColumns: (columns: COLUMNS) => Promise<null>
+): Promise<void> => {
     // Update column
     const oldColumn = columns[columnId]
     const newCardIds = Array.from(oldColumn.cardIds)

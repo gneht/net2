@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify'
 
-const toastClipboard = () => {
+const toastClipboard = (): void => {
     const ToastBody = () => {
         return (
             <div className="p-4 inline-flex space-x-3">

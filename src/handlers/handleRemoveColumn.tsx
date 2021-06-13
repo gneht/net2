@@ -6,11 +6,11 @@ const handleRemoveColumn = async (
     columns: COLUMNS,
     columnOrder: Array<string>,
     collapsedOrder: Array<string>,
-    setCards: (cards: CARDS) => any,
-    setColumns: (columns: COLUMNS) => any,
-    setColumnOrder: (columnOrder: Array<string>) => any,
-    setCollapsedOrder: (collapsedOrder: Array<string>) => any
-) => {
+    setCards: (cards: CARDS) => Promise<null>,
+    setColumns: (columns: COLUMNS) => Promise<null>,
+    setColumnOrder: (columnOrder: Array<string>) => Promise<null>,
+    setCollapsedOrder: (collapsedOrder: Array<string>) => Promise<null>
+): Promise<null> => {
     // Delete Column
     const newColumns = columns
     const removedCards = newColumns[columnId].cardIds

@@ -5,7 +5,7 @@ const handleGenerateLink: (
     cards: CARDS,
     columns: COLUMNS,
     columnOrder: Array<string>
-) => Promise<string> = async (columnIds, cards, columns, columnOrder) => {
+) => Promise<string> = async (columnIds, cards, columns) => {
     // Define request data
     const generatedColumns: COLUMNS = {}
     const generatedCards: CARDS = {}
@@ -27,15 +27,9 @@ const handleGenerateLink: (
         }
     }
 
-    const generatedColumnOrder = columnOrder.filter((c) =>
-        columnIds.includes(c)
-    )
-
-    console.log({
-        cards: generatedCards,
-        columns: generatedColumns,
-        columnOrder: generatedColumnOrder,
-    })
+    // const generatedColumnOrder = columnOrder.filter((c) =>
+    //     columnIds.includes(c)
+    // )
 
     //   // POST request (returns id which we postpend to domain)
     //   fetch(`${SERVER_URI}`, {

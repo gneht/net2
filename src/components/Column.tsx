@@ -15,18 +15,18 @@ const Column: React.VFC<{
     options: OPTIONS
     showSelection: boolean
     selected: boolean
-    setShowSelection: (showSelection: boolean) => any
+    setShowSelection: React.Dispatch<React.SetStateAction<boolean>>
 
-    createCardHandler: (columnId: string) => any
-    removeCardHandler: (cardId: string) => any
+    createCardHandler: (columnId: string) => (url: string) => Promise<void>
+    removeCardHandler: (cardId: string) => void
 
-    updateColumnHandler: (title: string) => any
-    removeColumnHandler: (columnId: string) => any
+    updateColumnHandler: (title: string) => void
+    removeColumnHandler: (columnId: string) => Promise<void>
 
-    clipboardHandler: (columnId: string) => any
-    openAllCardsHandler: (columnId: string) => any
-    collapseHandler: (collapse: boolean) => any
-    selectionHandler: (columnId: string) => any
+    clipboardHandler: (columnId: string) => void
+    openAllCardsHandler: (columnId: string) => void
+    collapseHandler: (collapsed: boolean) => void
+    selectionHandler: (columnId: string) => void
 }> = (props) => {
     const {
         column,

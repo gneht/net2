@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
-const toastGenerateLink = (link: string) => {
+const toastGenerateLink = (link: string): void => {
     const ToastBody = (props: { link: string }) => {
         const [copyMsg, setCopyMsg] = useState(false)
         return (

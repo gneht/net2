@@ -1,20 +1,22 @@
 import { createContext, useContext } from 'react'
 import { CARDS, COLUMNS, OPTIONS } from '../types'
 
+import { Mutex } from 'async-mutex'
+
 type ContextProps = {
     cards: CARDS
     columns: COLUMNS
     columnOrder: Array<string>
     collapsedOrder: Array<string>
     options: OPTIONS
-    cardMutexRef: any
-    columnMutexRef: any
+    cardMutexRef?: React.MutableRefObject<Mutex>
+    columnMutexRef?: React.MutableRefObject<Mutex>
 
-    setCards: (cards: CARDS) => any
-    setColumns: (columns: COLUMNS) => any
-    setColumnOrder: (columnOrder: Array<string>) => any
-    setCollapsedOrder: (collapsedOrder: Array<string>) => any
-    setOptions: (options: OPTIONS) => any
+    setCards: (cards: CARDS) => Promise<null>
+    setColumns: (columns: COLUMNS) => Promise<null>
+    setColumnOrder: (columnOrder: Array<string>) => Promise<null>
+    setCollapsedOrder: (collapsedOrder: Array<string>) => Promise<null>
+    setOptions: React.Dispatch<React.SetStateAction<OPTIONS>>
 }
 
 export const MainContext = createContext<ContextProps>({
@@ -27,16 +29,14 @@ export const MainContext = createContext<ContextProps>({
         openOnLaunch: true,
         showCollapsed: true,
     },
-    cardMutexRef: null,
-    columnMutexRef: null,
 
-    setCards: (cards: CARDS) => {},
-    setColumns: (columns: COLUMNS) => {},
-    setColumnOrder: (columnOrder: Array<string>) => {},
-    setCollapsedOrder: (collapsedOrder: Array<string>) => {},
-    setOptions: (options: OPTIONS) => {},
+    setCards: () => new Promise(() => null),
+    setColumns: () => new Promise(() => null),
+    setColumnOrder: () => new Promise(() => null),
+    setCollapsedOrder: () => new Promise(() => null),
+    setOptions: () => {},
 })
 
-export function useMain() {
+export function useMain(): ContextProps {
     return useContext(MainContext)
 }

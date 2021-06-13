@@ -1,6 +1,8 @@
 import React from 'react'
 import App from './App'
 
+import { Mutex } from 'async-mutex'
+
 import handleCreateCard from './handlers/handleCreateCard'
 import handleCreateColumn from './handlers/handleCreateColumn'
 import handleRemoveCard from './handlers/handleRemoveCard'
@@ -29,7 +31,7 @@ export class SyncStateWrapper extends React.Component<
         }
     }
 
-    setCards = async (newCards: CARDS) => {
+    setCards = async (newCards: CARDS): Promise<null> => {
         return new Promise((resolve) => {
             this.setState({ cards: newCards }, () => {
                 resolve(null)
@@ -37,7 +39,7 @@ export class SyncStateWrapper extends React.Component<
         })
     }
 
-    setColumns = async (newColumns: COLUMNS) => {
+    setColumns = async (newColumns: COLUMNS): Promise<null> => {
         return new Promise((resolve) => {
             this.setState({ columns: newColumns }, () => {
                 resolve(null)
@@ -45,7 +47,7 @@ export class SyncStateWrapper extends React.Component<
         })
     }
 
-    setColumnOrder = async (newColumnOrder: Array<string>) => {
+    setColumnOrder = async (newColumnOrder: Array<string>): Promise<null> => {
         return new Promise((resolve) => {
             this.setState({ columnOrder: newColumnOrder }, () => {
                 resolve(null)
@@ -53,7 +55,9 @@ export class SyncStateWrapper extends React.Component<
         })
     }
 
-    setCollapsedOrder = async (newCollapsedOrder: Array<string>) => {
+    setCollapsedOrder = async (
+        newCollapsedOrder: Array<string>
+    ): Promise<null> => {
         return new Promise((resolve) => {
             this.setState({ collapsedOrder: newCollapsedOrder }, () => {
                 resolve(null)
@@ -62,9 +66,9 @@ export class SyncStateWrapper extends React.Component<
     }
 
     createCardHandler =
-        (options: OPTIONS, cardMutexRef: any) =>
+        (options: OPTIONS, cardMutexRef: React.MutableRefObject<Mutex>) =>
         (columnId: string) =>
-        async (url: string) => {
+        async (url: string): Promise<void> => {
             const release = await cardMutexRef.current.acquire()
             try {
                 await handleCreateCard(
@@ -82,12 +86,8 @@ export class SyncStateWrapper extends React.Component<
         }
 
     createColumnHandler =
-        (
-            options: OPTIONS,
-            columnMutexRef: any,
-            setColumnOrder: (columnOrder: Array<string>) => any
-        ) =>
-        async (title: string, imports: string) => {
+        (options: OPTIONS, columnMutexRef: React.MutableRefObject<Mutex>) =>
+        async (title: string, imports: string): Promise<void> => {
             const release = await columnMutexRef.current.acquire()
             try {
                 await handleCreateColumn(
@@ -107,18 +107,20 @@ export class SyncStateWrapper extends React.Component<
             }
         }
 
-    removeCardHandler = (columnId: string) => (cardId: string) => {
-        handleRemoveCard(
-            columnId,
-            cardId,
-            this.state.cards,
-            this.state.columns,
-            this.setCards,
-            this.setColumns
-        )
-    }
+    removeCardHandler =
+        (columnId: string) =>
+        (cardId: string): void => {
+            handleRemoveCard(
+                columnId,
+                cardId,
+                this.state.cards,
+                this.state.columns,
+                this.setCards,
+                this.setColumns
+            )
+        }
 
-    removeColumnHandler = async (columnId: string) => {
+    removeColumnHandler = async (columnId: string): Promise<void> => {
         await handleRemoveColumn(
             columnId,
             this.state.cards,
@@ -133,7 +135,7 @@ export class SyncStateWrapper extends React.Component<
         await toastRemoveColumn()
     }
 
-    render() {
+    render(): React.ReactNode {
         return (
             <App
                 cards={this.state.cards}

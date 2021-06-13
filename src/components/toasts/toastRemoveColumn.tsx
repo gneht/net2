@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify'
 
-const toastRemoveColumn = async () => {
+const toastRemoveColumn = (): void => {
     const ToastBody = () => {
         return <div className="p-4">Column Removed</div>
     }

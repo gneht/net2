@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
-import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd'
 import { Mutex } from 'async-mutex'
 
 import { MainContext } from './context/main'
@@ -31,18 +31,20 @@ const App: React.VFC<{
     columns: COLUMNS
     columnOrder: Array<string>
     collapsedOrder: Array<string>
-    setCards: (cards: CARDS) => any
-    setColumns: (columns: COLUMNS) => any
-    setColumnOrder: (columnOrder: Array<string>) => any
-    setCollapsedOrder: (collapsedOrder: Array<string>) => any
-    createCardHandler: (options: OPTIONS, cardMutexRef: any) => any
+    setCards: (cards: CARDS) => Promise<null>
+    setColumns: (columns: COLUMNS) => Promise<null>
+    setColumnOrder: (columnOrder: Array<string>) => Promise<null>
+    setCollapsedOrder: (collapsedOrder: Array<string>) => Promise<null>
+    createCardHandler: (
+        options: OPTIONS,
+        cardMutexRef: React.MutableRefObject<Mutex>
+    ) => (columnId: string) => (url: string) => Promise<void>
     createColumnHandler: (
         options: OPTIONS,
-        columnMutexRef: any,
-        setColumnOrder: (columnOrder: Array<string>) => any
-    ) => any
-    removeCardHandler: (columnId: string) => any
-    removeColumnHandler: (columnId: string) => any
+        columnMutexRef: React.MutableRefObject<Mutex>
+    ) => (title: string, imports: string) => Promise<void>
+    removeCardHandler: (columnId: string) => (cardId: string) => void
+    removeColumnHandler: (columnId: string) => Promise<void>
 }> = (props) => {
     const {
         cards,
@@ -150,7 +152,7 @@ const App: React.VFC<{
     const onDragUpdate = () => {
         // https://github.com/eggheadio-projects/Beautiful-and-Accessible-Drag-and-Drop-with-react-beautiful-dnd-notes/blob/master/07-react-customise-the-appearance-of-an-app-using-react-beautiful-dnd-ondragstart-and-ondragend.md
     }
-    const onDragEnd = (result: any) => {
+    const onDragEnd = (result: DropResult): void => {
         handleDragEnd(
             result,
             columns,
@@ -249,8 +251,7 @@ const App: React.VFC<{
                                         <NewColumnComponent
                                             createColumnHandler={createColumnHandler(
                                                 options,
-                                                columnMutexRef,
-                                                setColumnOrder
+                                                columnMutexRef
                                             )}
                                         />
                                         {columnOrder.length === 0 ? (
