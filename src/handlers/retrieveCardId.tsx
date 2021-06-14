@@ -7,7 +7,7 @@ const retrieveCardId = async (cards: CARDS): Promise<string> => {
     do {
         cardId = `t${t}`
         t++
-    } while (!cards.hasOwnProperty(cardId))
+    } while (cards.hasOwnProperty(cardId))
     return cardId
 }
 

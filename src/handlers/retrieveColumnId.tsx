@@ -9,7 +9,7 @@ const retrieveColumnId = async (
     do {
         columnId = `c${c}`
         c++
-    } while (!concatenated.includes(columnId))
+    } while (concatenated.includes(columnId))
 
     return columnId
 }

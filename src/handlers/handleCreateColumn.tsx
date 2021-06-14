@@ -41,7 +41,7 @@ const handleCreateColumn = async (
             do {
                 cardId = `t${t}`
                 t++
-            } while (!cards.hasOwnProperty(cardId))
+            } while (cards.hasOwnProperty(cardId))
 
             // cardId = await retrieveCardId(cards);
 
@@ -64,7 +64,7 @@ const handleCreateColumn = async (
             do {
                 cardId = `t${t}`
                 t++
-            } while (!cards.hasOwnProperty(cardId))
+            } while (cards.hasOwnProperty(cardId))
 
             newCards[cardId] = {
                 id: cardId,
