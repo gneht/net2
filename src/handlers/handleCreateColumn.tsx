@@ -12,11 +12,13 @@ const handleCreateColumn = async (
     collapsedOrder: Array<string>,
     options: OPTIONS,
 
-    setCards: (cards: CARDS) => any,
-    setColumns: (columns: COLUMNS) => any,
-    setColumnOrder: (columnOrder: Array<string>) => any
-) => {
-    const newCards: { [id: string]: any } = {}
+    setCards: (cards: CARDS) => Promise<null>,
+    setColumns: (columns: COLUMNS) => Promise<null>,
+    setColumnOrder: (columnOrder: Array<string>) => Promise<null>
+): Promise<void> => {
+    const newCards: {
+        [id: string]: { id: string; text: string | null; url: string }
+    } = {}
     const cardIds: Array<string> = []
     let cardId
     let t = 0
@@ -36,13 +38,10 @@ const handleCreateColumn = async (
 
         // This chunk of code is repeated. Optimization possible?
         for (let i = 0; i < parsedMatches.length; i++) {
-            while (true) {
+            do {
                 cardId = `t${t}`
                 t++
-                if (!cards.hasOwnProperty(cardId)) {
-                    break
-                }
-            }
+            } while (cards.hasOwnProperty(cardId))
 
             // cardId = await retrieveCardId(cards);
 
@@ -62,13 +61,10 @@ const handleCreateColumn = async (
         const res = await retrieveTitles(matches)
 
         for (let i = 0; i < matches.length; i++) {
-            while (true) {
+            do {
                 cardId = `t${t}`
                 t++
-                if (!cards.hasOwnProperty(cardId)) {
-                    break
-                }
-            }
+            } while (cards.hasOwnProperty(cardId))
 
             newCards[cardId] = {
                 id: cardId,
@@ -109,11 +105,6 @@ const handleCreateColumn = async (
         title: title || '',
         cardIds,
     }
-
-    console.log({
-        ...columns,
-        [newColumnId]: newColumn,
-    })
 
     await setColumns({
         ...columns,

@@ -1,14 +1,16 @@
 import { COLUMNS } from '../types'
 
+import { DropResult } from 'react-beautiful-dnd'
+
 const handleDragEnd = async (
-    result: any,
+    result: DropResult,
     columns: COLUMNS,
     columnOrder: Array<string>,
     collapsedOrder: Array<string>,
-    setColumns: (columns: COLUMNS) => any,
-    setColumnOrder: (columnOrder: Array<string>) => any,
-    setCollapsedOrder: (collapsedOrder: Array<string>) => any
-) => {
+    setColumns: (columns: COLUMNS) => Promise<null>,
+    setColumnOrder: (columnOrder: Array<string>) => Promise<null>,
+    setCollapsedOrder: (collapsedOrder: Array<string>) => Promise<null>
+): Promise<void> => {
     const { destination, source, draggableId, type } = result
 
     if (!destination) {

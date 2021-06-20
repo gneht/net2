@@ -3,23 +3,20 @@ import { Draggable, Droppable } from 'react-beautiful-dnd'
 import ColumnHeader from './ColumnHeader'
 import { COLUMNS } from '../types'
 
-import { useMain } from '../context/main'
-
 import './CollapsedColumns.css'
 
 const CollapsedColumns: React.VFC<{
     columns: COLUMNS
     collapsedOrder: Array<string>
     selected: Array<string>
-    setShowSelection: (showSelected: boolean) => any
-    removeColumnHandler: (columnId: string) => any
-    updateColumnHandler: (columnId: string) => any
-    openAllCardsHandler: (columnId: string) => any
-    clipboardHandler: (columnId: string) => any
-    collapseHandler: (columnId: string) => any
-    selectionHandler: (columnId: string) => any
+    setShowSelection: React.Dispatch<React.SetStateAction<boolean>>
+    removeColumnHandler: (columnId: string) => Promise<void>
+    updateColumnHandler: (columnId: string) => (title: string) => void
+    openAllCardsHandler: (columnId: string) => void
+    clipboardHandler: (columnId: string) => void
+    collapseHandler: (columnId: string) => (collapsed: boolean) => void
+    selectionHandler: (columnId: string) => void
 }> = (props) => {
-    const { options } = useMain()
     const {
         columns,
         collapsedOrder,

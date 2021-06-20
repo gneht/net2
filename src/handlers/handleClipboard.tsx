@@ -5,7 +5,7 @@ const handleClipboard = (
     cards: CARDS,
     columns: COLUMNS,
     options: OPTIONS
-) => {
+): void => {
     let out = ''
     let card
     for (let i = 0; i < columns[columnId].cardIds.length; i++) {

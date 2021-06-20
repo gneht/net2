@@ -1,5 +1,4 @@
-import { useState, useRef } from 'react'
-import { useMain } from '../context/main'
+import React, { useState, useRef } from 'react'
 
 import { COLUMN } from '../types'
 import './ColumnHeader.css'
@@ -10,23 +9,23 @@ import { RiExternalLinkLine, RiDeleteBack2Line } from 'react-icons/ri'
 import { IoMdCopy } from 'react-icons/io'
 import { HiOutlineLink, HiOutlineDotsVertical } from 'react-icons/hi'
 
+import { DraggableProvided } from 'react-beautiful-dnd'
+
 const ColumnHeader: React.VFC<{
     column: COLUMN
-    removeColumnHandler: (columnId: string) => any
-    clipboardHandler: (columnId: string) => any
-    updateColumnHandler: (title: string) => any
-    openAllCardsHandler: (columnId: string) => any
+    removeColumnHandler: (columnId: string) => Promise<void>
+    clipboardHandler: (columnId: string) => void
+    updateColumnHandler: (title: string) => void
+    openAllCardsHandler: (columnId: string) => void
     collapse: boolean
-    collapseHandler: (collapse: boolean) => any
+    collapseHandler: (collapse: boolean) => void
     showSelection: boolean
-    setShowSelection: (showSelection: boolean) => any
+    setShowSelection: React.Dispatch<React.SetStateAction<boolean>>
     selected: boolean
-    selectionHandler: (columnId: string) => any
-    dragHandleProps: any
+    selectionHandler: (columnId: string) => void
+    dragHandleProps: DraggableProvided['dragHandleProps']
     showCardCount?: boolean
 }> = (props) => {
-    const { options } = useMain()
-
     const {
         column,
         removeColumnHandler,
@@ -47,18 +46,18 @@ const ColumnHeader: React.VFC<{
     const [showTarget, setShowTarget] = useState(true)
 
     // Consider resizeInputs
-    const input = useRef<any>(null)
+    const input = useRef<HTMLInputElement>(null)
 
-    const onTargetClick = (e: any) => {
-        if (e.target === e.currentTarget) {
+    const onTargetClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+        if (e.target === e.currentTarget && input.current) {
             input.current.focus()
             input.current.select()
         }
         setShowTarget(false)
     }
 
-    const handleKeydown = (e: any) => {
-        if (e.which === 13 || e.which === 27) {
+    const handleKeydown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+        if ((e.which === 13 || e.which === 27) && input.current) {
             input.current.blur()
         }
     }

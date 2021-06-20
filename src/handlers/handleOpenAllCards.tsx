@@ -4,7 +4,7 @@ const handleOpenAllCards = (
     columnId: string,
     cards: CARDS,
     columns: COLUMNS
-) => {
+): void => {
     // Check open in different window?
     let currentUrl
     for (let i = 0; i < columns[columnId].cardIds.length; i++) {

@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { OPTIONS } from '../types'
 import './ColumnFooter.css'
 
-function ColumnFooter(props: {
+const ColumnFooter: React.VFC<{
     options: OPTIONS
-    createCardHandler: (text: string) => any
-}) {
+    createCardHandler: (url: string) => Promise<void>
+}> = (props) => {
     const { createCardHandler, options } = props
 
     const [text, setText] = useState('')

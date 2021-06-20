@@ -10,8 +10,8 @@ import { IoMdSettings } from 'react-icons/io'
 const Header: React.VFC<{
     selected: Array<string>
     showSelection: boolean
-    setSelected: (selected: Array<string>) => any
-    setShowSelection: (showSelection: boolean) => any
+    setSelected: React.Dispatch<React.SetStateAction<string[]>>
+    setShowSelection: React.Dispatch<React.SetStateAction<boolean>>
 }> = (props) => {
     const { selected, showSelection, setSelected, setShowSelection } = props
 

@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify'
 
-const toastCollapse = (collapsed: boolean) => {
+const toastCollapse = (collapsed: boolean): void => {
     const ToastBody = (props: { collapsed: boolean }) => {
         return (
             <div className="p-4 inline-flex space-x-3">

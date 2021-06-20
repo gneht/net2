@@ -1,4 +1,4 @@
-const retrieveTitle = async (url: string) => {
+const retrieveTitle = async (url: string): Promise<string | null> => {
     const data = await fetch(`https://cors-anywhere.herokuapp.com/${url}`, {
         headers: {
             'Content-Type': 'application/json',
@@ -8,7 +8,7 @@ const retrieveTitle = async (url: string) => {
         .then((res) => {
             return res.text()
         })
-        .catch((res) => {
+        .catch(() => {
             return 'ERROR'
         })
     const matches = data.match(/<title>(.*?)<\/title>/)

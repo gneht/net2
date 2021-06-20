@@ -1,4 +1,4 @@
-import { CARD, CARDS, COLUMNS, OPTIONS } from '../types'
+import { CARDS, COLUMNS, OPTIONS } from '../types'
 import retrieveTitle from './retrieveTitle'
 import retrieveCardId from './retrieveCardId'
 
@@ -8,9 +8,9 @@ const handleCreateCard = async (
     cards: CARDS,
     columns: COLUMNS,
     options: OPTIONS,
-    setCards: (cards: CARDS) => any,
-    setColumns: (columns: COLUMNS) => any
-) => {
+    setCards: (newCards: CARDS) => Promise<null>,
+    setColumns: (newColumns: COLUMNS) => Promise<null>
+): Promise<void> => {
     // Find available card id
     const newCardId = await retrieveCardId(cards)
 

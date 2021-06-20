@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useMain } from '../context/main'
 
 const NewColumnComponent: React.VFC<{
-    createColumnHandler: (title: string, imports: string) => any
+    createColumnHandler: (title: string, imports: string) => Promise<void>
 }> = (props) => {
     const { createColumnHandler } = props
     const { options } = useMain()
